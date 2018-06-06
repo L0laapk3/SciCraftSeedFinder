@@ -91,7 +91,7 @@ public class QuadHutFinder {
 	
 	
 	public static void main(String[] args) {
-		long startSeed = 278827814000L; //Long.parseLong(args[0]);
+		long startSeed = 0L; //Long.parseLong(args[0]);
 		System.out.println(startSeed);
 		long endSeed = 281474976710656L; //higher than 2^48 will be useless
 		int radius = 4;
