@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
 
-public class strongholdFinder {
+public class StrongholdLocator {
 
 
 	public static xzPair findValidLocation(int searchX, int searchY, int size, List<Biome> paramList, Random random, BiomeGenerator generator) {

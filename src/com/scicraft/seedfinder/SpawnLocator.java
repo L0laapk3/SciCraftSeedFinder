@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
-public class spawnFinder {
+public class SpawnLocator {
 
 	public static final ArrayList<Biome> validBiomes = new ArrayList<Biome>(Arrays.asList(
 			Biome.forest,
