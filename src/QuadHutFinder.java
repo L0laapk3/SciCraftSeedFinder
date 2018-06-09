@@ -13,10 +13,10 @@ public class QuadHutFinder {
 	public static int[] xpos = new int[4];
 	public static int[] zpos = new int[4];
 	public static int xmon, zmon;
-	public static structureHut hut;
+	public static StructureHut hut;
 	public static bitIterator bitIt;
 
-	public static boolean allSwamp(int[] x, int[] z, biomeGenerator generate)
+	public static boolean allSwamp(int[] x, int[] z, BiomeGenerator generate)
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -80,7 +80,7 @@ public class QuadHutFinder {
 
 		while(bitIt.hasNext()){
 			long seedFull = bitIt.next();
-			biomeGenerator generate = new biomeGenerator(seedFull, 2);
+			BiomeGenerator generate = new BiomeGenerator(seedFull, 2);
 			if(allSwamp(xpos, zpos, generate))
 				System.out.println(seedFull);
 		}
@@ -103,7 +103,7 @@ public class QuadHutFinder {
 		int radius = 4;
 		long currentSeed;
 		int xr, zr;
-		hut = new structureHut();
+		hut = new StructureHut();
 		for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){
 
 			for(int x=-radius; x<radius - 1; x+=2) {

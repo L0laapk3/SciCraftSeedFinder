@@ -18,8 +18,8 @@ public class QuadHutMonFinder {
 	public static int[] xpos = new int[4];
 	public static int[] zpos = new int[4];
 	public static int xmon, zmon;
-	public static structureHut hut;
-	public static structureMonument monument;
+	public static StructureHut hut;
+	public static StructureMonument monument;
 	public static bitIterator bitIt;
 	public final static boolean debug=false;
 	public final static int monumnetLimitLo=16;
@@ -28,7 +28,7 @@ public class QuadHutMonFinder {
 	public final static int xRegion = 0;
 	public final static int zRegion = 0;
 
-	public static boolean allSwamp(int[] x, int[] z, biomeGenerator generate)
+	public static boolean allSwamp(int[] x, int[] z, BiomeGenerator generate)
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -51,7 +51,7 @@ public class QuadHutMonFinder {
 		return xrand >= 22 && zrand >= 22;
 	}
 
-	private static String checkForMonumnetinBR(int x, int z, long seed, biomeGenerator generate) {
+	private static String checkForMonumnetinBR(int x, int z, long seed, BiomeGenerator generate) {
 
 		String ret = "";
 		if(debug) System.out.println("Check mon in BR @(" + x +"," + z + ")");
@@ -168,7 +168,7 @@ public class QuadHutMonFinder {
 		if(debug) System.out.println("Right possible: " + seed);
 		while(bitIt.hasNext()){
 			long seedFull = bitIt.next();
-			biomeGenerator generate = new biomeGenerator(seedFull, 2);
+			BiomeGenerator generate = new BiomeGenerator(seedFull, 2);
 			if(allSwamp(xpos, zpos, generate)){
 				//Quad hut calc.
 				mon_str = checkForMonumnetinBR(xmon, zmon, seed, generate);
@@ -185,8 +185,8 @@ public class QuadHutMonFinder {
 	public static void checkCoords(long currentSeed) {
 		int xr, zr;
 		int radius = 4;
-		hut = new structureHut();
-		monument = new structureMonument();
+		hut = new StructureHut();
+		monument = new StructureMonument();
 		for(int x=-radius; x<radius - 1; x+=2) {
 
 			long xPart = hut.xPart(x);

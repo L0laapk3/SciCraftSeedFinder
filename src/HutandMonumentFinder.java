@@ -17,13 +17,13 @@ public class HutandMonumentFinder {
 	public static int[] mxpos = new int[4];
 	public static int[] mzpos = new int[4];
 	public static int xmon, zmon;
-	public static structureHut hut;
-	public static structureMonument monument;
+	public static StructureHut hut;
+	public static StructureMonument monument;
 	public static bitIterator bitIt;
 	public final static int monumnetLimit=22;
 	public final static boolean debug=true;
 
-	public static boolean allSwamp(int[] x, int[] z, biomeGenerator generate)
+	public static boolean allSwamp(int[] x, int[] z, BiomeGenerator generate)
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -146,10 +146,10 @@ public class HutandMonumentFinder {
 		return xrand <=1 && zrand <= 1;
 	}
 
-	private static int printCorner(int corner, biomeGenerator generate) {
+	private static int printCorner(int corner, BiomeGenerator generate) {
 		int c = 0;
 		if (!(xpos[corner] == 0 && zpos[corner] == 0)) {
-			if( hut.structureWillSpawn(0,0,xpos[corner], zpos[corner], generate)) {
+			if (hut.structureWillSpawn(0,0,xpos[corner], zpos[corner], generate)) {
 				System.out.print(" hut: (" + (xpos[corner] * 16) + "," + (zpos[corner] * 16) +")");
 				c++;
 			}
@@ -175,7 +175,7 @@ public class HutandMonumentFinder {
 		return 100;
 	}
 
-	private static boolean checkCorner(int corner, biomeGenerator generate) {
+	private static boolean checkCorner(int corner, BiomeGenerator generate) {
 		boolean spawnHut = false;
 		boolean spawnMon = false;
 		//System.out.print(" " + corner + " " +xpos[corner]  +", " + zpos[corner] );
@@ -203,7 +203,7 @@ public class HutandMonumentFinder {
 
 		while(bitIt.hasNext()){
 			long seedFull = bitIt.next();
-			biomeGenerator generate = new biomeGenerator(seedFull, 2);
+			BiomeGenerator generate = new BiomeGenerator(seedFull, 2);
 			if(checkCorner(BOTTOMRIGHT, generate) &&
 				checkCorner(TOPRIGHT, generate) &&
 				checkCorner(TOPLEFT, generate) &&
@@ -234,7 +234,7 @@ public class HutandMonumentFinder {
 
 		while(bitIt.hasNext()){
 			long seedFull = bitIt.next();
-			biomeGenerator generate = new biomeGenerator(seedFull, 2);
+			BiomeGenerator generate = new BiomeGenerator(seedFull, 2);
 			if(allSwamp(xpos, zpos, generate))
 				System.out.println(seedFull);
 		}
@@ -253,8 +253,8 @@ public class HutandMonumentFinder {
 		int radius = 4;
 		long currentSeed;
 		int xr, zr;
-		hut = new structureHut();
-		monument = new structureMonument();
+		hut = new StructureHut();
+		monument = new StructureMonument();
 		for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){
 
 			for(int x=-radius; x<radius - 1; x+=2) {

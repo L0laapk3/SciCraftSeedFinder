@@ -1,6 +1,6 @@
 package com.scicraft.seedfinder;
 
-public class structureHut extends structureTemple {
+public class StructureHut extends StructureTemple {
 	protected long structureSeed() {
 		return 14357620;
 	}

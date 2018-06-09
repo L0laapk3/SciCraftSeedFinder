@@ -2,7 +2,7 @@ package com.scicraft.seedfinder;
 
 import java.util.Random;
 
-abstract public class structureTemple extends structure {
+abstract public class StructureTemple extends Structure {
 	private Random rnd = new Random();
 
 	/*

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.List;
 import java.util.Arrays;
 
-public class structureMonument extends structure{
+public class StructureMonument extends Structure {
 	private Random rnd = new Random();
 
 	/*
@@ -65,7 +65,7 @@ public class structureMonument extends structure{
 	 * checks if it will spawn
 	 * @see com.scicraft.seedfinder.structure#structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, com.scicraft.seedfinder.BiomeGenerator)
 	 */
-	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, BiomeGenerator generator){
+	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, BiomeGenerator generator) {
 		if(		generator.getBiomeAt(xRegion * 512 + xRandom * 16 + 8, zRegion * 512 +zRandom * 16 + 8) == 24 &&
 				isValidBiome(xRegion * 512 + xRandom * 16 + 8, zRegion * 512 +zRandom * 16 + 8, 29, validSurroundingBiomes, generator))
 			return true;

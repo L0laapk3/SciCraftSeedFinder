@@ -1,6 +1,6 @@
 package com.scicraft.seedfinder;
 
-public abstract class structure {
+public abstract class Structure {
 	/*
 	 * generate the xpart of the equation
 	 */
