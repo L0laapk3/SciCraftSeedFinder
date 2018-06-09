@@ -32,7 +32,7 @@ public class HutandMonumentFinder {
 		}
 		return true;
 	}
-	
+
 	private static boolean checkForStructureBR(int x, int z, long seed) {
 		if (checkForMonumnetinBR(x, z, seed) || checkForHutinBR(x,z,seed) ) {
 			return true;
@@ -41,13 +41,13 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinBR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);		
+		xzPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPLEFT] = x  * 32 + xrand;
 		zpos[TOPLEFT] = z  * 32 + zrand;
-		
-		
+
+
 		return xrand >= 22 && zrand >= 22;
 	}
 
@@ -71,15 +71,15 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinBL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);		
+		xzPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPRIGHT] = x  * 32 + xrand;
 		zpos[TOPRIGHT] = z  * 32 + zrand;
-	
+
 		return xrand <=1 && zrand >= 22;
 	}
-	
+
 	private static boolean checkForMonumnetinBL(int x, int z, long seed) {
 		xzPair coords = monument.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
@@ -99,12 +99,12 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinTR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);		
+		xzPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMLEFT] = x  * 32 + xrand;
 		zpos[BOTTOMLEFT] = z  * 32 + zrand;
-		
+
 		return xrand >=22 && zrand <= 1;
 	}
 
@@ -127,15 +127,15 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinTL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);		
+		xzPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMRIGHT] = x  * 32 + xrand;
 		zpos[BOTTOMRIGHT] = z  * 32 + zrand;
-		
+
 		return xrand <=1 && zrand <= 1;
 	}
-	
+
 	private static boolean checkForMonumnetinTL(int x, int z, long seed) {
 		xzPair coords = monument.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
@@ -145,9 +145,9 @@ public class HutandMonumentFinder {
 
 		return xrand <=1 && zrand <= 1;
 	}
-	
+
 	private static int printCorner(int corner, biomeGenerator generate) {
-		int c = 0; 
+		int c = 0;
 		if (!(xpos[corner] == 0 && zpos[corner] == 0)) {
 			if( hut.structureWillSpawn(0,0,xpos[corner], zpos[corner], generate)) {
 				System.out.print(" hut: (" + (xpos[corner] * 16) + "," + (zpos[corner] * 16) +")");
@@ -155,7 +155,7 @@ public class HutandMonumentFinder {
 			}
 		}
 		if (!(mxpos[corner] == 0 && mzpos[corner] == 0)) {
-			if (monument.structureWillSpawn(0,0,mxpos[corner], mzpos[corner], generate)) {	
+			if (monument.structureWillSpawn(0,0,mxpos[corner], mzpos[corner], generate)) {
 				System.out.print(" monument: (" + (mxpos[corner] * 16) + "," + (mzpos[corner] * 16) +")");
 				c++;
 			}
@@ -182,7 +182,7 @@ public class HutandMonumentFinder {
 		//System.out.print(" " + corner + " " +mxpos[corner]  +", " + mzpos[corner] );
 		if (!(xpos[corner] == 0 && zpos[corner] == 0)) {
 			spawnHut =  hut.structureWillSpawn(0,0,xpos[corner], zpos[corner], generate);
-		} 
+		}
 		if (!(mxpos[corner] == 0 && mzpos[corner] == 0)) {
 			spawnMon =  monument.structureWillSpawn(0,0,mxpos[corner], mzpos[corner], generate);
 		}
@@ -205,12 +205,12 @@ public class HutandMonumentFinder {
 			long seedFull = bitIt.next();
 			biomeGenerator generate = new biomeGenerator(seedFull, 2);
 			if(checkCorner(BOTTOMRIGHT, generate) &&
-			    checkCorner(TOPRIGHT, generate) &&
-			    checkCorner(TOPLEFT, generate) &&
-			    checkCorner(BOTTOMLEFT, generate)) {
-			    System.out.print("Seed: " + seedFull);
-			    int c = 0;
-			    for(int i = 0; i < 4; i++) {
+				checkCorner(TOPRIGHT, generate) &&
+				checkCorner(TOPLEFT, generate) &&
+				checkCorner(BOTTOMLEFT, generate)) {
+				System.out.print("Seed: " + seedFull);
+				int c = 0;
+				for(int i = 0; i < 4; i++) {
 					c += printCorner(i, generate);
 				}
 				System.out.println(" structures: " + c);
@@ -221,32 +221,32 @@ public class HutandMonumentFinder {
 	}
 
 
-	public static void checkBits(long seed) {	
+	public static void checkBits(long seed) {
 		long seedBit = seed & 281474976710655L;	//magic number
 		bitIt = new bitIterator(seedBit);
-		
-		
+
+
 		System.out.println("checking bits of base " + seedBit);
 		System.out.println((xpos[0] * 16) + " " + (zpos[0] * 16));
 		System.out.println((xpos[1] * 16) + " " + (zpos[1] * 16));
 		System.out.println((xpos[2] * 16) + " " + (zpos[2] * 16));
 		System.out.println((xpos[3] * 16) + " " + (zpos[3] * 16));
-		
+
 		while(bitIt.hasNext()){
 			long seedFull = bitIt.next();
 			biomeGenerator generate = new biomeGenerator(seedFull, 2);
-			if(allSwamp(xpos, zpos, generate))		
+			if(allSwamp(xpos, zpos, generate))
 				System.out.println(seedFull);
 		}
-		
+
 	}
-	
-	
+
+
 	public static void main(String[] args) {
-		long startSeed = -281474976710658L; 
+		long startSeed = -281474976710658L;
 		while (startSeed < -281474976710656L || startSeed > 281470000000000L ) {
-			startSeed = rnd.nextLong(); //Long.parseLong(args[0]);	
-		} 
+			startSeed = rnd.nextLong(); //Long.parseLong(args[0]);
+		}
 		if(debug) startSeed = 148372070833119L;
 		if(debug) System.out.println("Seed:" + startSeed);
 		long endSeed = 281474976710656L; //higher than 2^48 will be useless
@@ -255,43 +255,43 @@ public class HutandMonumentFinder {
 		int xr, zr;
 		hut = new structureHut();
 		monument = new structureMonument();
-		for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){			
-			
-			for(int x=-radius; x<radius - 1; x+=2) {	
-				
+		for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){
+
+			for(int x=-radius; x<radius - 1; x+=2) {
+
 				long xPart = hut.xPart(x);
-				
+
 				for(int z=-radius; z<radius - 1; z+=2) {
-					
+
 					long zPart = hut.zPart(z);
 					xzPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
 					if(coords != null){
 						xr = coords.getX();
 						zr = coords.getZ();
-						
-						
+
+
 						if (xr <= 1) {
-							
+
 							if( zr <= 1 ) {
 								// candidate witch hut, is in the top left of the 32x32 chunk array
 								// this means that to be in a quad it would be in bottom right of the quad
-								
+
 								// check the 32x32 chunk area neighbors to the left and above
-								if ( checkForStructureTR(x-1, z, currentSeed) && 
+								if ( checkForStructureTR(x-1, z, currentSeed) &&
 									checkForStructureBR(x-1, z-1, currentSeed) &&
-									checkForStructureBL(x, z-1, currentSeed)) {	
+									checkForStructureBL(x, z-1, currentSeed)) {
 										xpos[BOTTOMRIGHT] =  x * 32 + xr;
 										zpos[BOTTOMRIGHT] =  z * 32 + zr;
-										checkIfValid(currentSeed);			
+										checkIfValid(currentSeed);
 								}
-								
+
 							}
 							else if( zr >= 22 ){
 								// candidate witch hut, is in the bottom left of the 32x32 chunk array
 								// this means that to be in a quad it would be in top right of the quad
-								
+
 								// check the 32x32 chunk area neighbors to the left and below
-								if ( checkForStructureTL(x, z+1, currentSeed) && 
+								if ( checkForStructureTL(x, z+1, currentSeed) &&
 									checkForStructureTR(x-1, z+1, currentSeed) &&
 									checkForStructureBR(x-1, z, currentSeed)) {
 										xpos[TOPRIGHT] =  x  * 32 + xr;
@@ -299,15 +299,15 @@ public class HutandMonumentFinder {
 										checkIfValid(currentSeed);
 								}
 							}
-		
-						} else{							
+
+						} else{
 							if( zr <= 1 ) {
 								// candidate witch hut, is in the top right of the 32x32 chunk array
 								// this means that to be in a quad it would be in bottom left of the quad
-								
+
 								// check the 32x32 chunk area neighbors to the right and above
-								if ( checkForStructureBR(x, z-1, currentSeed) && 
-									checkForStructureBL(x+1, z-1, currentSeed) && 
+								if ( checkForStructureBR(x, z-1, currentSeed) &&
+									checkForStructureBL(x+1, z-1, currentSeed) &&
 									checkForStructureTL(x+1, z, currentSeed)) {
 										xpos[BOTTOMLEFT] =  x  * 32 + xr;
 										zpos[BOTTOMLEFT] =  z  * 32 + zr;
@@ -315,18 +315,18 @@ public class HutandMonumentFinder {
 
 								}
 							}
-							else if( zr >= 22 ){						
+							else if( zr >= 22 ){
 								// candidate witch hut, is in the bottom right of the 32x32 chunk array
 								// this means that to be in a quad it would be in top left of the quad
-								
+
 								// check the 32x32 chunk area neighbors to the right and below
-								if ( checkForStructureBL(x+1, z, currentSeed) && 
-									checkForStructureTL(x+1, z+1, currentSeed) && 
+								if ( checkForStructureBL(x+1, z, currentSeed) &&
+									checkForStructureTL(x+1, z+1, currentSeed) &&
 									checkForStructureTR(x, z+1, currentSeed)) {
 										xpos[TOPLEFT] =  x  * 32 + xr;
 										zpos[TOPLEFT] =  z  * 32 + zr;
-										checkIfValid(currentSeed);									
-								}	
+										checkIfValid(currentSeed);
+								}
 							}
 						}
 					}
@@ -339,5 +339,5 @@ public class HutandMonumentFinder {
 				}
 			}
 		}
-	}	
+	}
 }
