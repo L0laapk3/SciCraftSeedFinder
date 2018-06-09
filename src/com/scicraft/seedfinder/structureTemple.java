@@ -42,4 +42,5 @@ abstract public class structureTemple extends structure {
 	// Previously, all structure types used 14357617 for this value, now
 	// that value is only used by desert temples.
 	abstract protected long structureSeed();
+	abstract protected int[] validBiomes();
 }
