@@ -26,9 +26,9 @@ abstract public class structureTemple extends structure {
 	}
 	/*
 	 * checks if it will spawn
-	 * @see com.scicraft.seedfinder.structure#structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, com.scicraft.seedfinder.biomeGenerator)
+	 * @see com.scicraft.seedfinder.structure#structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, com.scicraft.seedfinder.BiomeGenerator)
 	 */
-	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, biomeGenerator generator) {
+	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, BiomeGenerator generator) {
 		int biomeAt = generator.getBiomeAt(xRegion*512 + xRandom*16 + 8, zRegion*512 + zRandom*16 + 8);
 		for (int biome : validBiomes()) {
 			if (biomeAt == biome) {

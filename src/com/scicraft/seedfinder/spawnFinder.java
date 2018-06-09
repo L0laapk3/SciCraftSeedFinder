@@ -6,24 +6,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class spawnFinder {
-	
+
 	public static final ArrayList<Biome> validBiomes = new ArrayList<Biome>(Arrays.asList(
-			Biome.forest, 
-			Biome.plains, 
-			Biome.taiga, 
-			Biome.taigaHills, 
-			Biome.forestHills, 
-			Biome.jungle, 
+			Biome.forest,
+			Biome.plains,
+			Biome.taiga,
+			Biome.taigaHills,
+			Biome.forestHills,
+			Biome.jungle,
 			Biome.jungleHills
 		));
-	
-	public static xzPair findValidLocation(int searchX, int searchY, int size, List<Biome> paramList, Random random, biomeGenerator generator) {
+
+	public static xzPair findValidLocation(int searchX, int searchY, int size, List<Biome> paramList, Random random, BiomeGenerator generator) {
 		// TODO: Find out if we should useQuarterResolutionMap or not
 		int x1 = searchX - size >> 2;
 		int y1 = searchY - size >> 2;
 		int x2 = searchX + size >> 2;
 		int y2 = searchY + size >> 2;
-		
+
 		int width = x2 - x1 + 1;
 		int height = y2 - y1 + 1;
 		int[] arrayOfInt = generator.getBiomeData(x1, y1, width, height, true);
@@ -40,11 +40,11 @@ public class spawnFinder {
 			location = new xzPair(x, y);
 			numberOfValidFound++;
 		}
-		
+
 		return location;
 	}
-	
-	public xzPair getSpawnPosition(long seed, biomeGenerator generator) {
+
+	public xzPair getSpawnPosition(long seed, BiomeGenerator generator) {
 		Random random = new Random(seed);
 		xzPair location = findValidLocation(0, 0, 256, validBiomes, random, generator);
 		int x = 0;

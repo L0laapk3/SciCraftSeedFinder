@@ -2,10 +2,10 @@ package com.scicraft.seedfinder;
 
 import minecraft.layer.*;
 
-public class biomeGenerator {
+public class BiomeGenerator {
 	public GenLayer biomeIndexLayer;
 	public GenLayer biomeIndexLayerquarter;
-	public biomeGenerator(long seed, int quarter)
+	public BiomeGenerator(long seed, int quarter)
 	{
 		if(quarter == 0)
 			biomeIndexLayer = GenLayer.func_180781_a(seed, "")[1]; //1:1 resolution

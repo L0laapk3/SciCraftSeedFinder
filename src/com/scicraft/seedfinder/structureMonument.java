@@ -43,7 +43,7 @@ public class structureMonument extends structure{
 			}
 		);
 
-	public static boolean isValidBiome(int x, int y, int size, List<Biome> validBiomes, biomeGenerator generator) {
+	public static boolean isValidBiome(int x, int y, int size, List<Biome> validBiomes, BiomeGenerator generator) {
 		int x1 = x - size >> 2;
 		int y1 = y - size >> 2;
 		int x2 = x + size >> 2;
@@ -63,9 +63,9 @@ public class structureMonument extends structure{
 
 	/*
 	 * checks if it will spawn
-	 * @see com.scicraft.seedfinder.structure#structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, com.scicraft.seedfinder.biomeGenerator)
+	 * @see com.scicraft.seedfinder.structure#structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, com.scicraft.seedfinder.BiomeGenerator)
 	 */
-	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, biomeGenerator generator){
+	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, BiomeGenerator generator){
 		if(		generator.getBiomeAt(xRegion * 512 + xRandom * 16 + 8, zRegion * 512 +zRandom * 16 + 8) == 24 &&
 				isValidBiome(xRegion * 512 + xRandom * 16 + 8, zRegion * 512 +zRandom * 16 + 8, 29, validSurroundingBiomes, generator))
 			return true;
