@@ -3,15 +3,7 @@ package com.scicraft.seedfinder;
 import com.scicraft.seedfinder.*;
 
 public class QuadHutFinder extends StructureAndBiomeFinder {
-	public final static int TOPRIGHT = 0;
-	public final static int BOTTOMRIGHT = 1;
-	public final static int BOTTOMLEFT = 2;
-	public final static int TOPLEFT = 3;
-	public static int[] xpos = new int[4];
-	public static int[] zpos = new int[4];
-	public static int xmon, zmon;
 	public static StructureHut hut;
-	public static BitIterator bitIt;
 
 	QuadHutFinder() {
 		hut = new StructureHut();
