@@ -1,48 +1,61 @@
 import com.scicraft.seedfinder.*;
 
 public class QuadHutFinder extends StructureAndBiomeFinder {
-	public static StructureHut hut;
+	private final StructureHut hut;
 
-	QuadHutFinder() {
+	public QuadHutFinder() {
 		hut = new StructureHut();
 	}
 
-	// This starts by looking for the top-left witch hut, because it would be
-	// the first of the four encountered in the loop. The loop starts at
-	// -radius-1 so that it includes situations where the bottom-left extends
-	// into the searched region.
 	protected XZPair[] seedPotential(long baseSeed, int radius) {
-		for (int regionX=-radius-1; regionX < radius; regionX++) {
+		// Skips by two to find any potential hut that could be a member of
+		// a quad hut group.
+		for (int regionX=-radius; regionX < radius; regionX+=2) {
 			long xPart = hut.xPart(regionX);
 
-			for (int regionZ=-radius-1; regionZ < radius; regionZ++) {
+			for (int regionZ=-radius; regionZ < radius; regionZ+=2) {
 				long zPart = hut.zPart(regionZ);
 
-				XZPair topLeft = hut.structurePosInRegionFast(xPart, zPart, baseSeed);
+				XZPair check = hut.structurePosInRegionFast(xPart, zPart, baseSeed, 1, 22);
+				if (check == null) {
+					continue;
+				}
+
+				// Start checking with what would be the top left of the group.
+				int rX = regionX;
+				int rZ = regionZ;
+				if (check.getX() <= 1) {
+					rX--;
+				}
+				if (check.getZ() <= 1) {
+					rZ--;
+				}
+
+				XZPair topLeft = hut.structurePosInRegion(rX, rZ, baseSeed);
 				if (topLeft.getX() < 22 || topLeft.getZ() < 22) {
 					continue;
 				}
 
-				XZPair topRight = hut.structurePosInRegion(regionX+1, regionZ, baseSeed);
+				XZPair topRight = hut.structurePosInRegion(rX+1, rZ, baseSeed);
 				if (topRight.getX() > 1 || topRight.getZ() < 22) {
 					continue;
 				}
 
-				XZPair bottomLeft = hut.structurePosInRegion(regionX, regionZ+1, baseSeed);
+				XZPair bottomLeft = hut.structurePosInRegion(rX, rZ+1, baseSeed);
 				if (bottomLeft.getX() < 22 || bottomLeft.getZ() > 1) {
 					continue;
 				}
 
-				XZPair bottomRight = hut.structurePosInRegion(regionX+1, regionZ+1, baseSeed);
+				XZPair bottomRight = hut.structurePosInRegion(rX+1, rZ+1, baseSeed);
 				if (bottomRight.getX() > 1 || bottomRight.getZ() > 1) {
 					continue;
 				}
 
 				return new XZPair[]{
-					getFullChunk(regionX, regionZ, topLeft),
-					getFullChunk(regionX+1, regionZ, topRight),
-					getFullChunk(regionX, regionZ+1, bottomLeft),
-					getFullChunk(regionX+1, regionZ+1, bottomRight)
+					getFullChunk(rX, rZ, topLeft),
+					getFullChunk(rX+1, rZ, topRight),
+					getFullChunk(rX, rZ+1, bottomLeft),
+					getFullChunk(rX+1, rZ+1, bottomRight)
 				};
 			}
 		}
@@ -50,8 +63,9 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 		return null;
 	}
 
-	protected boolean fullSeedWorks(long seed, int radius, XZPair[] chunkLocations) {
-		BiomeGenerator generator = new BiomeGenerator(seed, 2);
+	protected boolean fullSeedWorks(
+			long seed, BiomeGenerator generator, int radius,
+			XZPair[] chunkLocations, XZPair worldSpawn) {
 		for (XZPair location : chunkLocations) {
 			if (!hut.structureWillSpawn(location.getX(), location.getZ(), generator)) {
 				return false;

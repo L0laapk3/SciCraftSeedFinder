@@ -39,6 +39,9 @@ public class FinderMain {
 			case "QuadHut":
 				finder = new QuadHutFinder();
 				break;
+			case "QuadHutAndOceanSpawn":
+				finder = new QuadHutAndOceanSpawnFinder();
+				break;
 			case "QuadHutMon":
 				finder = new HutandMonumentFinder();
 				break;
@@ -49,6 +52,7 @@ public class FinderMain {
 		}
 		System.out.println("Finder: " + args[0]);
 		System.out.println("Start seed: " + startSeed + ", Radius: " + radius);
+		System.out.println("======================================================================");
 		finder.findSeeds(startSeed, radius);
 	}
 }
