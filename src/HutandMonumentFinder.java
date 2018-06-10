@@ -19,7 +19,7 @@ public class HutandMonumentFinder {
 	public static int xmon, zmon;
 	public static StructureHut hut;
 	public static StructureMonument monument;
-	public static bitIterator bitIt;
+	public static BitIterator bitIt;
 	public final static int monumnetLimit=22;
 	public final static boolean debug=true;
 
@@ -41,7 +41,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinBR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPLEFT] = x  * 32 + xrand;
@@ -52,7 +52,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForMonumnetinBR(int x, int z, long seed) {
-		xzPair coords = monument.structurePosInRegion(x, z, seed);
+		XZPair coords = monument.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		mxpos[TOPLEFT] = x  * 32 + xrand;
@@ -71,7 +71,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinBL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPRIGHT] = x  * 32 + xrand;
@@ -81,7 +81,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForMonumnetinBL(int x, int z, long seed) {
-		xzPair coords = monument.structurePosInRegion(x, z, seed);
+		XZPair coords = monument.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		mxpos[TOPRIGHT] = x  * 32 + xrand;
@@ -99,7 +99,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinTR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMLEFT] = x  * 32 + xrand;
@@ -109,7 +109,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForMonumnetinTR(int x, int z, long seed) {
-		xzPair coords = monument.structurePosInRegion(x, z, seed);
+		XZPair coords = monument.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		mxpos[BOTTOMLEFT] = x  * 32 + xrand;
@@ -127,7 +127,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForHutinTL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMRIGHT] = x  * 32 + xrand;
@@ -137,7 +137,7 @@ public class HutandMonumentFinder {
 	}
 
 	private static boolean checkForMonumnetinTL(int x, int z, long seed) {
-		xzPair coords = monument.structurePosInRegion(x, z, seed);
+		XZPair coords = monument.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		mxpos[BOTTOMRIGHT] = x  * 32 + xrand;
@@ -193,7 +193,7 @@ public class HutandMonumentFinder {
 
 	public static void checkIfValid(long seed) {
 		long seedBit = seed & 281474976710655L;	//magic number
-		bitIt = new bitIterator(seedBit);
+		bitIt = new BitIterator(seedBit);
 		int structure = 0;
 
 		System.out.println("checking hut and monumnet " + seed);
@@ -223,7 +223,7 @@ public class HutandMonumentFinder {
 
 	public static void checkBits(long seed) {
 		long seedBit = seed & 281474976710655L;	//magic number
-		bitIt = new bitIterator(seedBit);
+		bitIt = new BitIterator(seedBit);
 
 
 		System.out.println("checking bits of base " + seedBit);
@@ -264,7 +264,7 @@ public class HutandMonumentFinder {
 				for(int z=-radius; z<radius - 1; z+=2) {
 
 					long zPart = hut.zPart(z);
-					xzPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
+					XZPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
 					if(coords != null){
 						xr = coords.getX();
 						zr = coords.getZ();

@@ -15,7 +15,7 @@ public abstract class Structure {
 		return (long) z * 132897987541L;
 	}
 
-	public abstract xzPair structurePosInRegion(long x, long z, long seed);
-	public abstract xzPair structurePosInRegionFast(long xPart, long zPart, long seed, int lowerThen, int higherThen);
+	public abstract XZPair structurePosInRegion(long x, long z, long seed);
+	public abstract XZPair structurePosInRegionFast(long xPart, long zPart, long seed, int lowerThen, int higherThen);
 	public abstract boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, BiomeGenerator generator);
 }

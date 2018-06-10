@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class StrongholdLocator {
 
 
-	public static xzPair findValidLocation(int searchX, int searchY, int size, List<Biome> paramList, Random random, BiomeGenerator generator) {
+	public static XZPair findValidLocation(int searchX, int searchY, int size, List<Biome> paramList, Random random, BiomeGenerator generator) {
 		// TODO: Find out if we should useQuarterResolutionMap or not
 		int x1 = searchX - size >> 2;
 		int y1 = searchY - size >> 2;
@@ -17,7 +17,7 @@ public class StrongholdLocator {
 		int width = x2 - x1 + 1;
 		int height = y2 - y1 + 1;
 		int[] arrayOfInt = generator.getBiomeData(x1, y1, width, height, true);
-		xzPair location = null;
+		XZPair location = null;
 		int numberOfValidFound = 0;
 		for (int i = 0; i < width*height; i++) {
 			int x = x1 + i % width << 2;
@@ -27,15 +27,15 @@ public class StrongholdLocator {
 			Biome localBiome = Biome.biomes[arrayOfInt[i]];
 			if ((!paramList.contains(localBiome)) || ((location != null) && (random.nextInt(numberOfValidFound + 1) != 0)))
 				continue;
-			location = new xzPair(x, y);
+			location = new XZPair(x, y);
 			numberOfValidFound++;
 		}
 
 		return location;
 	}
 
-	public xzPair[] findStrongholds(long seed, BiomeGenerator generator) {
-		xzPair[] strongholds = new xzPair[3];
+	public XZPair[] findStrongholds(long seed, BiomeGenerator generator) {
+		XZPair[] strongholds = new XZPair[3];
 		Random random = new Random();
 		random.setSeed(seed);
 
@@ -55,14 +55,14 @@ public class StrongholdLocator {
 			int z = (int)Math.round(Math.sin(angle) * distance);
 
 
-			xzPair location = findValidLocation((x << 4) + 8, (z << 4) + 8, 112, biomeArrayList,random , generator);
+			XZPair location = findValidLocation((x << 4) + 8, (z << 4) + 8, 112, biomeArrayList,random , generator);
 			if(location != null){
 				x = location.getX() >> 4;
 				z = location.getZ() >> 4;
 			}
 
 
-			strongholds[i] = new xzPair((x << 4), (z << 4));
+			strongholds[i] = new XZPair((x << 4), (z << 4));
 			angle += 6.283185307179586D / 3.0D;
 		}
 		return strongholds;

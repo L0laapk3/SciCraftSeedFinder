@@ -14,7 +14,7 @@ public class QuadHutFinder {
 	public static int[] zpos = new int[4];
 	public static int xmon, zmon;
 	public static StructureHut hut;
-	public static bitIterator bitIt;
+	public static BitIterator bitIt;
 
 	public static boolean allSwamp(int[] x, int[] z, BiomeGenerator generate)
 	{
@@ -27,7 +27,7 @@ public class QuadHutFinder {
 	}
 
 	private static boolean checkForStructureBR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPLEFT] = x  * 32 + xrand;
@@ -37,7 +37,7 @@ public class QuadHutFinder {
 	}
 
 	private static boolean checkForStructureBL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPRIGHT] = x  * 32 + xrand;
@@ -47,7 +47,7 @@ public class QuadHutFinder {
 	}
 
 	private static boolean checkForStructureTR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMLEFT] = x  * 32 + xrand;
@@ -57,7 +57,7 @@ public class QuadHutFinder {
 	}
 
 	private static boolean checkForStructureTL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMRIGHT] = x  * 32 + xrand;
@@ -69,7 +69,7 @@ public class QuadHutFinder {
 
 	public static void checkBits(long seed) {
 		long seedBit = seed & 281474976710655L;	//magic number
-		bitIt = new bitIterator(seedBit);
+		bitIt = new BitIterator(seedBit);
 
 
 		System.out.println("checking bits of base " + seedBit);
@@ -113,7 +113,7 @@ public class QuadHutFinder {
 				for(int z=-radius; z<radius - 1; z+=2) {
 
 					long zPart = hut.zPart(z);
-					xzPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
+					XZPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
 
 					if(coords != null){
 						xr = coords.getX();

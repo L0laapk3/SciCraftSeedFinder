@@ -20,7 +20,7 @@ public class QuadHutMonFinder {
 	public static int xmon, zmon;
 	public static StructureHut hut;
 	public static StructureMonument monument;
-	public static bitIterator bitIt;
+	public static BitIterator bitIt;
 	public final static boolean debug=false;
 	public final static int monumnetLimitLo=16;
 	public final static int monumnetLimitHi=24;
@@ -40,7 +40,7 @@ public class QuadHutMonFinder {
 	}
 
 	private static boolean checkForStructureBR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPLEFT] = x  * 32 + xrand;
@@ -55,7 +55,7 @@ public class QuadHutMonFinder {
 
 		String ret = "";
 		if(debug) System.out.println("Check mon in BR @(" + x +"," + z + ")");
-		xzPair coords = monument.structurePosInRegion(x, z, seed);
+		XZPair coords = monument.structurePosInRegion(x, z, seed);
 		int mxpos = x  * 32 + coords.getX();
 		int mzpos = z  * 32 + coords.getZ();
 		if ( coords.getX() >= monumnetLimitHi && coords.getZ() >= monumnetLimitHi ) {
@@ -79,7 +79,7 @@ public class QuadHutMonFinder {
 	}
 
 	private static boolean checkForStructureBL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[TOPRIGHT] = x  * 32 + xrand;
@@ -89,7 +89,7 @@ public class QuadHutMonFinder {
 	}
 
 	private static boolean checkForStructureTR(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMLEFT] = x  * 32 + xrand;
@@ -99,7 +99,7 @@ public class QuadHutMonFinder {
 	}
 
 	private static boolean checkForStructureTL(int x, int z, long seed) {
-		xzPair coords = hut.structurePosInRegion(x, z, seed);
+		XZPair coords = hut.structurePosInRegion(x, z, seed);
 		int xrand = coords.getX();
 		int zrand = coords.getZ();
 		xpos[BOTTOMRIGHT] = x  * 32 + xrand;
@@ -162,8 +162,8 @@ public class QuadHutMonFinder {
 	*/
 	public static void checkIfValid(long seed) {
 		long seedBit = seed & 281474976710655L;	//magic number
-		bitIt = new bitIterator(seedBit);
-		xzPair monCords = null;
+		bitIt = new BitIterator(seedBit);
+		XZPair monCords = null;
 		String mon_str;
 		if(debug) System.out.println("Right possible: " + seed);
 		while(bitIt.hasNext()){
@@ -194,7 +194,7 @@ public class QuadHutMonFinder {
 			for(int z=-radius; z<radius - 1; z+=2) {
 
 				long zPart = hut.zPart(z);
-				xzPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
+				XZPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
 
 				if(coords != null){
 					xr = coords.getX();

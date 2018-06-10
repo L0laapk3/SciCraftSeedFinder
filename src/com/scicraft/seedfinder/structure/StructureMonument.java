@@ -10,19 +10,19 @@ public class StructureMonument extends Structure {
 	/*
 	 * return the chunk position in the region of the possible structure
 	 */
-	public xzPair structurePosInRegion(long x, long z, long seed){
+	public XZPair structurePosInRegion(long x, long z, long seed){
 		rnd.setSeed((long) x * 341873128712L + (long)z * 132897987541L + seed + 10387313);
-		return new xzPair((rnd.nextInt(27) + rnd.nextInt(27)) / 2 , (rnd.nextInt(27) + rnd.nextInt(27)) / 2);
+		return new XZPair((rnd.nextInt(27) + rnd.nextInt(27)) / 2 , (rnd.nextInt(27) + rnd.nextInt(27)) / 2);
 	}
 
 	/*
 	 * first check if the x pos is valid else return null
 	 */
-	public xzPair structurePosInRegionFast(long xPart, long zPart, long seed, int lowerThen, int higherThen){
+	public XZPair structurePosInRegionFast(long xPart, long zPart, long seed, int lowerThen, int higherThen){
 		rnd.setSeed(xPart + zPart + seed + 10387313);
 		int xRand = (rnd.nextInt(27) + rnd.nextInt(27)) / 2;
 		if(xRand <= lowerThen || xRand >= higherThen)
-			return new xzPair(xRand, (rnd.nextInt(27) + rnd.nextInt(27)) / 2);
+			return new XZPair(xRand, (rnd.nextInt(27) + rnd.nextInt(27)) / 2);
 		else
 			return null;
 	}
