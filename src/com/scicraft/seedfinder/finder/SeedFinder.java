@@ -1,3 +1,5 @@
+package com.scicraft.seedfinder;
+
 abstract public class SeedFinder {
 	protected final static long endSeed = 1L<<48;
 

@@ -16,15 +16,19 @@ public class BiomeGenerator {
 			biomeIndexLayer = GenLayer.func_180781_a(seed, null)[1];
 			biomeIndexLayerquarter = GenLayer.func_180781_a(seed, "")[0]; // 1:4 fourth resolution less calculations
 		}
-			
+
 	}
-	
-	public int getBiomeAt(int x, int y)
+
+	public int getBiomeAt(int x, int z)
 	{
 		IntCache.resetIntCache();
-		return biomeIndexLayer.getInts(x, y, 1, 1)[0];
+		return biomeIndexLayer.getInts(x, z, 1, 1)[0];
 	}
-	
+
+	public int getBiomeAtCenterOfChunk(int x, int z) {
+		return getBiomeAt(x*16 + 8, z*16 + 8);
+	}
+
 	public int[] getBiomeData(int x, int y, int width, int height, boolean quarter)
 	{
 		IntCache.resetIntCache();

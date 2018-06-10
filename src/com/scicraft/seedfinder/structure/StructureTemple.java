@@ -13,6 +13,11 @@ abstract public class StructureTemple extends Structure {
 		return new XZPair(rnd.nextInt(24), rnd.nextInt(24));
 	}
 
+	public XZPair structurePosInRegionFast(long xPart, long zPart, long seed) {
+		rnd.setSeed(xPart + zPart + seed + structureSeed());
+		return new XZPair(rnd.nextInt(24), rnd.nextInt(24));
+	}
+
 	/*
 	 * first check if the x pos is valid else return null
 	 */
@@ -30,6 +35,19 @@ abstract public class StructureTemple extends Structure {
 	 */
 	public boolean structureWillSpawn(int xRegion, int zRegion, int xRandom, int zRandom, BiomeGenerator generator) {
 		int biomeAt = generator.getBiomeAt(xRegion*512 + xRandom*16 + 8, zRegion*512 + zRandom*16 + 8);
+		for (int biome : validBiomes()) {
+			if (biomeAt == biome) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean structureWillSpawn(int x, int z, BiomeGenerator generator) {
+		int chunkX = x / 16;
+		int chunkZ = z / 16;
+
+		int biomeAt = generator.getBiomeAtCenterOfChunk(chunkX, chunkZ);
 		for (int biome : validBiomes()) {
 			if (biomeAt == biome) {
 				return true;

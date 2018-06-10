@@ -1,173 +1,63 @@
-import java.util.Random;
+package com.scicraft.seedfinder;
 
 import com.scicraft.seedfinder.*;
 
-public class QuadHutFinder extends SeedFinder {
+public class QuadHutFinder extends StructureAndBiomeFinder {
 	public final static int TOPRIGHT = 0;
 	public final static int BOTTOMRIGHT = 1;
 	public final static int BOTTOMLEFT = 2;
 	public final static int TOPLEFT = 3;
-	public static Random rnd = new Random();
 	public static int[] xpos = new int[4];
 	public static int[] zpos = new int[4];
 	public static int xmon, zmon;
 	public static StructureHut hut;
 	public static BitIterator bitIt;
 
-	public static boolean allSwamp(int[] x, int[] z, BiomeGenerator generate)
-	{
-		for(int i = 0; i < 4; i++)
-		{
-			if(generate.getBiomeAt(x[i] * 16 + 8, z[i] * 16 + 8) != 6)
-				return false;
-		}
-		return true;
-	}
-
-	private static boolean checkForStructureBR(int x, int z, long seed) {
-		XZPair coords = hut.structurePosInRegion(x, z, seed);
-		int xrand = coords.getX();
-		int zrand = coords.getZ();
-		xpos[TOPLEFT] = x  * 32 + xrand;
-		zpos[TOPLEFT] = z  * 32 + zrand;
-
-		return xrand >= 22 && zrand >= 22;
-	}
-
-	private static boolean checkForStructureBL(int x, int z, long seed) {
-		XZPair coords = hut.structurePosInRegion(x, z, seed);
-		int xrand = coords.getX();
-		int zrand = coords.getZ();
-		xpos[TOPRIGHT] = x  * 32 + xrand;
-		zpos[TOPRIGHT] = z  * 32 + zrand;
-
-		return xrand <=1 && zrand >= 22;
-	}
-
-	private static boolean checkForStructureTR(int x, int z, long seed) {
-		XZPair coords = hut.structurePosInRegion(x, z, seed);
-		int xrand = coords.getX();
-		int zrand = coords.getZ();
-		xpos[BOTTOMLEFT] = x  * 32 + xrand;
-		zpos[BOTTOMLEFT] = z  * 32 + zrand;
-
-		return xrand >=22 && zrand <= 1;
-	}
-
-	private static boolean checkForStructureTL(int x, int z, long seed) {
-		XZPair coords = hut.structurePosInRegion(x, z, seed);
-		int xrand = coords.getX();
-		int zrand = coords.getZ();
-		xpos[BOTTOMRIGHT] = x  * 32 + xrand;
-		zpos[BOTTOMRIGHT] = z  * 32 + zrand;
-
-		return xrand <=1 && zrand <= 1;
-	}
-
-
-	public static void checkBits(long seed) {
-		long seedBit = seed & 281474976710655L;	//magic number
-		bitIt = new BitIterator(seedBit);
-
-
-		System.out.println("checking bits of base " + seedBit);
-		System.out.println((xpos[0] * 16) + " " + (zpos[0] * 16));
-		System.out.println((xpos[1] * 16) + " " + (zpos[1] * 16));
-		System.out.println((xpos[2] * 16) + " " + (zpos[2] * 16));
-		System.out.println((xpos[3] * 16) + " " + (zpos[3] * 16));
-
-		while(bitIt.hasNext()){
-			long seedFull = bitIt.next();
-			BiomeGenerator generate = new BiomeGenerator(seedFull, 2);
-			if(allSwamp(xpos, zpos, generate))
-				System.out.println(seedFull);
-		}
-
-	}
-
-
-	public void findSeeds(long startSeed, int radius) {
-		long currentSeed;
-		int xr, zr;
+	QuadHutFinder() {
 		hut = new StructureHut();
-		for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){
+	}
 
-			for(int x=-radius; x<radius - 1; x+=2) {
+	protected XZPair[] seedPotential(long baseSeed, int radius) {
+		for (int regionX=-radius; regionX < radius; regionX++) {
+			long xPart = hut.xPart(regionX);
 
-				long xPart = hut.xPart(x);
+			for (int regionZ=-radius; regionZ < radius; regionZ++) {
+				long zPart = hut.zPart(regionZ);
 
-				for(int z=-radius; z<radius - 1; z+=2) {
-
-					long zPart = hut.zPart(z);
-					XZPair coords = hut.structurePosInRegionFast(xPart, zPart, currentSeed, 1, 22);
-
-					if(coords != null){
-						xr = coords.getX();
-						zr = coords.getZ();
-
-
-						if (xr <= 1) {
-
-							if( zr <= 1 ) {
-								// candidate witch hut, is in the top left of the 32x32 chunk array
-								// this means that to be in a quad it would be in bottom right of the quad
-
-								// check the 32x32 chunk area neighbors to the left and above
-								if ( checkForStructureTR(x-1, z, currentSeed) &&
-									checkForStructureBR(x-1, z-1, currentSeed) &&
-									checkForStructureBL(x, z-1, currentSeed)) {
-										xpos[BOTTOMRIGHT] =  x * 32 + xr;
-										zpos[BOTTOMRIGHT] =  z * 32 + zr;
-										checkBits(currentSeed);
-								}
-
-							}
-							else if( zr >= 22 ){
-								// candidate witch hut, is in the bottom left of the 32x32 chunk array
-								// this means that to be in a quad it would be in top right of the quad
-
-								// check the 32x32 chunk area neighbors to the left and below
-								if ( checkForStructureTL(x, z+1, currentSeed) &&
-									checkForStructureTR(x-1, z+1, currentSeed) &&
-									checkForStructureBR(x-1, z, currentSeed)) {
-										xpos[TOPRIGHT] =  x  * 32 + xr;
-										zpos[TOPRIGHT] =  z  * 32 + zr;
-										checkBits(currentSeed);
-								}
-							}
-
-						} else{
-							if( zr <= 1 ) {
-								// candidate witch hut, is in the top right of the 32x32 chunk array
-								// this means that to be in a quad it would be in bottom left of the quad
-
-								// check the 32x32 chunk area neighbors to the right and above
-								if ( checkForStructureBR(x, z-1, currentSeed) &&
-									checkForStructureBL(x+1, z-1, currentSeed) &&
-									checkForStructureTL(x+1, z, currentSeed)) {
-										xpos[BOTTOMLEFT] =  x  * 32 + xr;
-										zpos[BOTTOMLEFT] =  z  * 32 + zr;
-										checkBits(currentSeed);
-
-								}
-							}
-							else if( zr >= 22 ){
-								// candidate witch hut, is in the bottom right of the 32x32 chunk array
-								// this means that to be in a quad it would be in top left of the quad
-
-								// check the 32x32 chunk area neighbors to the right and below
-								if ( checkForStructureBL(x+1, z, currentSeed) &&
-									checkForStructureTL(x+1, z+1, currentSeed) &&
-									checkForStructureTR(x, z+1, currentSeed)) {
-										xpos[TOPLEFT] =  x  * 32 + xr;
-										zpos[TOPLEFT] =  z  * 32 + zr;
-										checkBits(currentSeed);
-								}
-							}
-						}
-					}
+				XZPair topLeft = hut.structurePosInRegionFast(xPart, zPart, baseSeed);
+				if (topLeft.getX() < 22 || topLeft.getZ() < 22) {
+					continue;
 				}
+
+				XZPair topRight = hut.structurePosInRegion(regionX+1, regionZ, baseSeed);
+				if (topRight.getX() > 1 || topRight.getZ() < 22) {
+					continue;
+				}
+
+				XZPair bottomLeft = hut.structurePosInRegion(regionX, regionZ+1, baseSeed);
+				if (bottomLeft.getX() < 22 || bottomLeft.getZ() > 1) {
+					continue;
+				}
+
+				XZPair bottomRight = hut.structurePosInRegion(regionX+1, regionZ+1, baseSeed);
+				if (bottomRight.getX() > 1 || bottomRight.getZ() > 1) {
+					continue;
+				}
+
+				return new XZPair[]{topLeft, topRight, bottomLeft, bottomRight};
 			}
 		}
+
+		return null;
+	}
+
+	protected boolean fullSeedWorks(long seed, int radius, XZPair[] locations) {
+		BiomeGenerator generator = new BiomeGenerator(seed, 2);
+		for (XZPair location : locations) {
+			if (!hut.structureWillSpawn(location.getX(), location.getZ(), generator)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

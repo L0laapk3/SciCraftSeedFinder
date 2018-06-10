@@ -44,7 +44,7 @@ public class FinderMain {
 				break;
 			default:
 				System.out.println("Invalid finder name specified.");
-				finder = new QuadHutFinder();  // Hack
+				finder = null;
 				System.exit(1);
 		}
 		System.out.println("Finder: " + args[0]);
@@ -52,8 +52,3 @@ public class FinderMain {
 		finder.findSeeds(startSeed, radius);
 	}
 }
-//
-//FinderMain.java
-//HutandMonumentFinder.java
-//QuadHutFinder.java
-//QuadHutMonFinder.java

@@ -1,7 +1,7 @@
 package com.scicraft.seedfinder;
 
 public class XZPair {
-	private int x, z;
+	private final int x, z;
 	public XZPair(int x, int z){
 		this.x = x;
 		this.z = z;
