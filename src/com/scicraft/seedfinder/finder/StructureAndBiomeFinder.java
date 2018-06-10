@@ -1,10 +1,12 @@
-package com.scicraft.seedfinder;
-
 import com.scicraft.seedfinder.*;
 
 abstract public class StructureAndBiomeFinder extends SeedFinder {
 	abstract protected XZPair[] seedPotential(long baseSeed, int radius);
-	abstract protected boolean fullSeedWorks(long seed, int radius, XZPair[] locations);
+	abstract protected boolean fullSeedWorks(long seed, int radius, XZPair[] chunkLocations);
+
+	protected XZPair getFullChunk(int regionX, int regionZ, XZPair regionChunk) {
+		return new XZPair(regionX*32 + regionChunk.getX(), regionZ*32 + regionChunk.getZ());
+	}
 
 	public void findSeeds(long startSeed, int radius) {
 		for (long baseSeed = startSeed; baseSeed <= endSeed; baseSeed++) {
@@ -23,10 +25,10 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 		}
 	}
 
-	protected void hooray(long seed, XZPair[] locations) {
+	protected void hooray(long seed, XZPair[] chunkLocations) {
 		System.out.print(seed);
-		for (XZPair location:locations) {
-			System.out.print(" (" + location.getX() + ", " + location.getZ() + ")");
+		for (XZPair location:chunkLocations) {
+			System.out.print(" (" + location.getX()*16 + ", " + location.getZ()*16 + ")");
 		}
 		System.out.print("\n");
 	}

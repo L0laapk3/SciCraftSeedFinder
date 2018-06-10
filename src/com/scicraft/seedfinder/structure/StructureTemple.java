@@ -43,10 +43,7 @@ abstract public class StructureTemple extends Structure {
 		return false;
 	}
 
-	public boolean structureWillSpawn(int x, int z, BiomeGenerator generator) {
-		int chunkX = x / 16;
-		int chunkZ = z / 16;
-
+	public boolean structureWillSpawn(int chunkX, int chunkZ, BiomeGenerator generator) {
 		int biomeAt = generator.getBiomeAtCenterOfChunk(chunkX, chunkZ);
 		for (int biome : validBiomes()) {
 			if (biomeAt == biome) {

@@ -1,5 +1,3 @@
-package com.scicraft.seedfinder;
-
 import com.scicraft.seedfinder.*;
 
 public class QuadHutFinder extends StructureAndBiomeFinder {
@@ -9,11 +7,15 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 		hut = new StructureHut();
 	}
 
+	// This starts by looking for the top-left witch hut, because it would be
+	// the first of the four encountered in the loop. The loop starts at
+	// -radius-1 so that it includes situations where the bottom-left extends
+	// into the searched region.
 	protected XZPair[] seedPotential(long baseSeed, int radius) {
-		for (int regionX=-radius; regionX < radius; regionX++) {
+		for (int regionX=-radius-1; regionX < radius; regionX++) {
 			long xPart = hut.xPart(regionX);
 
-			for (int regionZ=-radius; regionZ < radius; regionZ++) {
+			for (int regionZ=-radius-1; regionZ < radius; regionZ++) {
 				long zPart = hut.zPart(regionZ);
 
 				XZPair topLeft = hut.structurePosInRegionFast(xPart, zPart, baseSeed);
@@ -36,16 +38,21 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 					continue;
 				}
 
-				return new XZPair[]{topLeft, topRight, bottomLeft, bottomRight};
+				return new XZPair[]{
+					getFullChunk(regionX, regionZ, topLeft),
+					getFullChunk(regionX+1, regionZ, topRight),
+					getFullChunk(regionX, regionZ+1, bottomLeft),
+					getFullChunk(regionX+1, regionZ+1, bottomRight)
+				};
 			}
 		}
 
 		return null;
 	}
 
-	protected boolean fullSeedWorks(long seed, int radius, XZPair[] locations) {
+	protected boolean fullSeedWorks(long seed, int radius, XZPair[] chunkLocations) {
 		BiomeGenerator generator = new BiomeGenerator(seed, 2);
-		for (XZPair location : locations) {
+		for (XZPair location : chunkLocations) {
 			if (!hut.structureWillSpawn(location.getX(), location.getZ(), generator)) {
 				return false;
 			}
