@@ -1,5 +1,3 @@
-
-
 import java.util.Random;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +7,7 @@ import java.util.stream.Stream;
 
 import com.scicraft.seedfinder.*;
 
-public class QuadHutMonFinder {
+public class QuadHutMonFinder extends SeedFinder {
 	public final static int TOPRIGHT = 0;
 	public final static int BOTTOMRIGHT = 1;
 	public final static int BOTTOMLEFT = 2;
@@ -182,9 +180,8 @@ public class QuadHutMonFinder {
 	}
 
 
-	public static void checkCoords(long currentSeed) {
+	public void checkCoords(long currentSeed, int radius) {
 		int xr, zr;
-		int radius = 4;
 		hut = new StructureHut();
 		monument = new StructureMonument();
 		for(int x=-radius; x<radius - 1; x+=2) {
@@ -271,34 +268,14 @@ public class QuadHutMonFinder {
 		}
 	}
 
-	public static void main(String[] args) {
-		if (args.length > 0) {
-			System.out.println("Will use " + args[0] + " as seed lite to check");
-			if(debug) System.out.println(args[0]);
-			Path path = Paths.get(args[0]);
-			try (Stream<String> lines = Files.lines(path)) {
-				lines.forEach(s -> checkCoords(Long.parseLong(s)));
-			} catch (IOException ex) {
-				 System.out.println("Error"+ ex);
-			}
-		} else {
-			System.out.println("Will just do random check");
-			long startSeed = -281474976710658L;
-			while (startSeed < -281474976710656L || startSeed > 281470000000000L ) {
-				startSeed = rnd.nextLong(); //Long.parseLong(args[0]);
-			}
-			if(debug) startSeed = 147915050934441L;
-			System.out.println("Start seed:" + startSeed);
-			long endSeed = 281474976710656L; //higher than 2^48 will be useless
-			long currentSeed;
-			long count = 0;
+	public void findSeeds(long startSeed, int radius) {
+		long currentSeed;
+		long count = 0;
 
-			for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){
-				count += 1;
-				checkCoords(currentSeed);
-			}
-			System.out.println("Checked: " + count + ", bye!");
+		for(currentSeed = startSeed; currentSeed <= endSeed; currentSeed++){
+			count += 1;
+			checkCoords(currentSeed, radius);
 		}
-
+		System.out.println("Checked: " + count + ", bye!");
 	}
 }

@@ -1,10 +1,8 @@
-
-
 import java.util.Random;
 
 import com.scicraft.seedfinder.*;
 
-public class QuadHutFinder {
+public class QuadHutFinder extends SeedFinder {
 	public final static int TOPRIGHT = 0;
 	public final static int BOTTOMRIGHT = 1;
 	public final static int BOTTOMLEFT = 2;
@@ -88,19 +86,7 @@ public class QuadHutFinder {
 	}
 
 
-	public static void main(String[] args) {
-		long startSeed;
-		if (args.length > 0) {
-			startSeed = Long.parseLong(args[0]);
-		} else {
-			System.out.println("No start seed specified, picking randomly...");
-			startSeed = ((long)rnd.nextInt(2^16) << 32) + rnd.nextInt();
-		}
-		System.out.println("Starting search with " + startSeed + "...");
-		// Only the first 48 bits are used for structure generation, so there
-		// is no value searching past 2^48.
-		long endSeed = 281474976710656L;
-		int radius = 4;
+	public void findSeeds(long startSeed, int radius) {
 		long currentSeed;
 		int xr, zr;
 		hut = new StructureHut();

@@ -1,10 +1,9 @@
-
-
 import java.util.Random;
 
 import com.scicraft.seedfinder.*;
 
-public class HutandMonumentFinder {
+public class HutandMonumentFinder extends SeedFinder {
+
 	public final static int HUT = 0;
 	public final static int MONUMNET = 1;
 	public final static int TOPRIGHT = 0;
@@ -241,16 +240,7 @@ public class HutandMonumentFinder {
 
 	}
 
-
-	public static void main(String[] args) {
-		long startSeed = -281474976710658L;
-		while (startSeed < -281474976710656L || startSeed > 281470000000000L ) {
-			startSeed = rnd.nextLong(); //Long.parseLong(args[0]);
-		}
-		if(debug) startSeed = 148372070833119L;
-		if(debug) System.out.println("Seed:" + startSeed);
-		long endSeed = 281474976710656L; //higher than 2^48 will be useless
-		int radius = 4;
+	public void findSeeds(long startSeed, int radius) {
 		long currentSeed;
 		int xr, zr;
 		hut = new StructureHut();

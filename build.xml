@@ -46,7 +46,7 @@
     <!-- Put everything in ${build} into the jar file -->
     <jar jarfile="${dist}/seedfinder.jar" basedir="${build}">
       <manifest>
-        <attribute name="Main-Class" value="QuadHutMonFinder"/>
+        <attribute name="Main-Class" value="FinderMain"/>
         <attribute name="Class-Path" value=". ${lib.list}"/>
         <attribute name="Build-Date" value="${DSTAMP}"/>
         <attribute name="Build-Time" value="${TSTAMP}"/>
