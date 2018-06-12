@@ -39,10 +39,16 @@ public class BiomeGenerator {
 			return biomeIndexLayer.getInts(x, y, width, height);
 	}
 
-	public Hashtable<Integer, Float> biomeCensus(int x, int z, int width, int height) {
+	public Hashtable<Integer, Float> biomeCensus(int x, int z, int width, int height, boolean quarter) {
 		int left = x - width/2;
 		int top = z - height/2;
-		int[] biomes = getBiomeData(left, top, width, height, false);
+		if (quarter) {
+			left /= 4;
+			top /= 4;
+			width /= 4;
+			height /= 4;
+		}
+		int[] biomes = getBiomeData(left, top, width, height, quarter);
 		Hashtable<Integer, Float> census = new Hashtable<Integer, Float>();
 		int area = width*height;
 		for (int i=0; i<256; i++) {

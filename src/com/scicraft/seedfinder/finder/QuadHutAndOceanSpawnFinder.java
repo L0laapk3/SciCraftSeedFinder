@@ -1,6 +1,5 @@
 import com.scicraft.seedfinder.*;
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class QuadHutAndOceanSpawnFinder extends QuadHutFinder {
 	private static final float WATER_FRACTION = 0.80f;
@@ -21,7 +20,7 @@ public class QuadHutAndOceanSpawnFinder extends QuadHutFinder {
 		}
 
 		Hashtable<Integer, Float> census = generator.biomeCensus(
-				worldSpawn.getX(), worldSpawn.getZ(), SPAWN_SIZE, SPAWN_SIZE);
+				worldSpawn.getX(), worldSpawn.getZ(), SPAWN_SIZE, SPAWN_SIZE, true);
 		float waterFraction = 0f;
 		for (Biome biome : WATER_BIOMES) {
 			waterFraction += census.get(biome.index);
