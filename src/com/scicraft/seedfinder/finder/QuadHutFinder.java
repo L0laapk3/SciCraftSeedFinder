@@ -51,6 +51,8 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 					continue;
 				}
 
+				// TODO: Get the precise spawn positions and orientations, and
+				// verify that all really are close enough.
 				return new XZPair[]{
 					getFullChunk(rX, rZ, topLeft),
 					getFullChunk(rX+1, rZ, topRight),

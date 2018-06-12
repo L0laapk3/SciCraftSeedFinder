@@ -54,7 +54,9 @@ public class FinderMain {
 				System.exit(1);
 		}
 		System.out.println("Finder: " + args[0]);
-		System.out.println("Start seed: " + startSeed + ", Radius: " + radius);
+		System.out.printf(
+				"Start seed: %d, Radius: %d regions (%d chunks, %d blocks)\n",
+				startSeed, radius, radius*32, radius*32*16);
 		System.out.println("======================================================================");
 		finder.findSeeds(startSeed, radius);
 	}
