@@ -63,14 +63,21 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 		return null;
 	}
 
-	protected boolean fullSeedWorks(
-			long seed, BiomeGenerator generator, int radius,
-			XZPair[] chunkLocations, XZPair worldSpawn) {
-		for (XZPair location : chunkLocations) {
+	protected boolean quadHutsWillSpawn(XZPair[] chunkLocations, BiomeGenerator generator) {
+		// Only iterate through first four structures so that subclasses can
+		// have additional ones more easily.
+		for (int i=0; i<4; i++) {
+			XZPair location = chunkLocations[i];
 			if (!hut.structureWillSpawn(location.getX(), location.getZ(), generator)) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	protected boolean fullSeedWorks(
+			long seed, BiomeGenerator generator, int radius,
+			XZPair[] chunkLocations, XZPair worldSpawn) {
+		return quadHutsWillSpawn(chunkLocations, generator);
 	}
 }

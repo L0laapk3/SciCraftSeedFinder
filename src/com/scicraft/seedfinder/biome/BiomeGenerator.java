@@ -1,5 +1,6 @@
 package com.scicraft.seedfinder;
 
+import java.util.*;
 import minecraft.layer.*;
 
 public class BiomeGenerator {
@@ -36,5 +37,23 @@ public class BiomeGenerator {
 			return biomeIndexLayerquarter.getInts(x, y, width, height);
 		else
 			return biomeIndexLayer.getInts(x, y, width, height);
+	}
+
+	public Hashtable<Integer, Float> biomeCensus(int x, int z, int width, int height) {
+		int left = x - width/2;
+		int top = z - height/2;
+		int[] biomes = getBiomeData(left, top, width, height, false);
+		Hashtable<Integer, Float> census = new Hashtable<Integer, Float>();
+		int area = width*height;
+		for (int i=0; i<256; i++) {
+			census.put(i, 0f);
+		}
+		for (int i=0; i<area; i++) {
+			census.put(biomes[i], census.get(biomes[i]) + 1);
+		}
+		for (Integer i : census.keySet()) {
+			census.put(i, census.get(i) / area);
+		}
+		return census;
 	}
 }
