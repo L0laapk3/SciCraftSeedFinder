@@ -45,6 +45,9 @@ public class FinderMain {
 			case "QuadHutExoticBiomes":
 				finder = new QuadHutExoticBiomesFinder();
 				break;
+			case "QuadHutAndMultiMansion":
+				finder = new QuadHutAndMultiMansionFinder();
+				break;
 			case "QuadHutMon":
 				finder = new HutandMonumentFinder();
 				break;

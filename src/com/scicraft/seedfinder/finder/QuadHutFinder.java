@@ -1,22 +1,18 @@
 import com.scicraft.seedfinder.*;
 
 public class QuadHutFinder extends StructureAndBiomeFinder {
-	private final StructureHut hut;
+	private final WitchHutLocator hut;
 
 	public QuadHutFinder() {
-		hut = new StructureHut();
+		hut = new WitchHutLocator();
 	}
 
 	protected XZPair[] seedPotential(long baseSeed, int radius) {
 		// Skips by two to find any potential hut that could be a member of
 		// a quad hut group.
 		for (int regionX=-radius; regionX < radius; regionX+=2) {
-			long xPart = hut.xPart(regionX);
-
 			for (int regionZ=-radius; regionZ < radius; regionZ+=2) {
-				long zPart = hut.zPart(regionZ);
-
-				XZPair check = hut.structurePosInRegionFast(xPart, zPart, baseSeed, 1, 22);
+				XZPair check = hut.structurePosInRegionEdge(regionX, regionZ, baseSeed, 2);
 				if (check == null) {
 					continue;
 				}
@@ -54,10 +50,10 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 				// TODO: Get the precise spawn positions and orientations, and
 				// verify that all really are close enough.
 				return new XZPair[]{
-					getFullChunk(rX, rZ, topLeft),
-					getFullChunk(rX+1, rZ, topRight),
-					getFullChunk(rX, rZ+1, bottomLeft),
-					getFullChunk(rX+1, rZ+1, bottomRight)
+					hut.fullCoordinates(rX, rZ, topLeft),
+					hut.fullCoordinates(rX+1, rZ, topRight),
+					hut.fullCoordinates(rX, rZ+1, bottomLeft),
+					hut.fullCoordinates(rX+1, rZ+1, bottomRight)
 				};
 			}
 		}
@@ -70,7 +66,7 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 		// have additional ones more easily.
 		for (int i=0; i<4; i++) {
 			XZPair location = chunkLocations[i];
-			if (!hut.structureWillSpawn(location.getX(), location.getZ(), generator)) {
+			if (!hut.structureWillSpawn(location, generator)) {
 				return false;
 			}
 		}

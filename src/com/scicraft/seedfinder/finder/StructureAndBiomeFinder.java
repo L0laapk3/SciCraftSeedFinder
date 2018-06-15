@@ -21,9 +21,9 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 				continue;
 			}
 
-			System.out.println("Checking bits with potential " + baseSeed + "...");
+			System.out.printf("Checking bits with potential 0x%016x...\n", baseSeed);
 			for (long high=0; high<(1<<16); high++) {
-				long fullSeed = (high << 48) + baseSeed;
+				long fullSeed = (high << 48) ^ baseSeed;
 				BiomeGenerator generator = new BiomeGenerator(fullSeed, 2);
 				XZPair worldSpawn = spawnLocator.getSpawnPosition(fullSeed, generator);
 				if (worldSpawn == null) {
@@ -40,7 +40,7 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 			long seed, BiomeGenerator generator, XZPair[] chunkLocations, XZPair worldSpawn) {
 		System.out.printf("%24d : (spawn: %4d, %4d)", seed, worldSpawn.getX(), worldSpawn.getZ());
 		for (XZPair location:chunkLocations) {
-			System.out.printf(" (%5d, %5d)", location.getX()*16, location.getZ()*16);
+			System.out.printf(" (%5d, %5d)", location.getX(), location.getZ());
 		}
 		System.out.print("\n");
 
