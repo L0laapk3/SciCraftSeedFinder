@@ -34,16 +34,30 @@ abstract public class StructureLocator {
 
 	public XZPair structurePosInRegion(long regionX, long regionZ, long worldSeed) {
 		setSeed(regionX, regionZ, worldSeed);
-		return new XZPair(getChunkInRegion(), getChunkInRegion());
+		int x = getChunkInRegion();
+		if (x < 2 && regionX < 0) { // Emulating 1.13 bug MC-131462.
+			return null;
+		}
+		int z = getChunkInRegion();
+		if (z < 2 && regionZ < 0) { // Emulating 1.13 bug MC-131462.
+			return null;
+		}
+		return new XZPair(x, z);
 	}
 
 	public XZPair structurePosInRegionEdge(long regionX, long regionZ, long worldSeed, int edgeSize) {
 		setSeed(regionX, regionZ, worldSeed);
 		int x = getChunkInRegion();
+		if (x < 2 && regionX < 0) { // Emulating 1.13 bug MC-131462.
+			return null;
+		}
 		if (x >= edgeSize && x < structurePosRange - edgeSize) {
 			return null;
 		}
 		int z = getChunkInRegion();
+		if (z < 2 && regionZ < 0) { // Emulating 1.13 bug MC-131462.
+			return null;
+		}
 		if (z >= edgeSize && z < structurePosRange - edgeSize) {
 			return null;
 		}
@@ -58,6 +72,9 @@ abstract public class StructureLocator {
 
 	public XZPair locationForRegion(int regionX, int regionZ, long worldSeed) {
 		XZPair chunkLocation = structurePosInRegion(regionX, regionZ, worldSeed);
+		if (chunkLocation == null) {
+			return null;
+		}
 		return fullCoordinates(regionX, regionZ, chunkLocation);
 	}
 
@@ -68,6 +85,9 @@ abstract public class StructureLocator {
 
 	public boolean structureWillSpawn(int regionX, int regionZ, long worldSeed, BiomeGenerator generator) {
 		XZPair location = locationForRegion(regionX, regionZ, worldSeed);
+		if (location == null) {
+			return false;
+		}
 		return structureWillSpawn(location, generator);
 	}
 }
