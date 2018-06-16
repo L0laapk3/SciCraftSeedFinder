@@ -5,34 +5,20 @@ import com.scicraft.seedfinder.finder.*;
 
 public class FinderMain {
 	public static void main(String[] args) {
+		String finderName = "QuadHut";
 		if (args.length < 1) {
-			System.out.println("ERROR: Must specify a finder name.");
+			System.out.println("No finder specified, using default...");
 			System.out.println("Available finders:");
 			System.out.println("	QuadHut");
-			System.out.println("	QuadHutMon");
-			System.out.println("	HutAndMonument");
-			System.exit(1);
-		}
-
-		long startSeed;
-		if (args.length >= 2) {
-			startSeed = Long.parseLong(args[1]);
+			System.out.println("	QuadHutAndOceanSpawn");
+			System.out.println("	QuadHutExoticBiomes");
+			System.out.println("	QuadHutAndMultiMansion");
 		} else {
-			System.out.println("No start seed specified, picking randomly...");
-			Random rnd = new Random();
-			startSeed = ((long)rnd.nextInt(1<<16) << 32) + rnd.nextInt();
-		}
-
-		int radius;
-		if (args.length >= 3) {
-			radius = Integer.parseInt(args[2]);
-		} else {
-			System.out.println("No radius specified, using default...");
-			radius = 4;
+			finderName = args[0];
 		}
 
 		SeedFinder finder;
-		switch (args[0]) {
+		switch (finderName) {
 			case "HutAndMonument":
 				finder = new HutandMonumentFinder();
 				break;
@@ -56,7 +42,25 @@ public class FinderMain {
 				finder = null;
 				System.exit(1);
 		}
-		System.out.println("Finder: " + args[0]);
+
+		long startSeed;
+		if (args.length >= 2) {
+			startSeed = Long.parseLong(args[1]);
+		} else {
+			System.out.println("No start seed specified, picking randomly...");
+			Random rnd = new Random();
+			startSeed = ((long)rnd.nextInt(1<<16) << 32) + rnd.nextInt();
+		}
+
+		int radius;
+		if (args.length >= 3) {
+			radius = Integer.parseInt(args[2]);
+		} else {
+			System.out.println("No radius specified, using default...");
+			radius = 4;
+		}
+
+		System.out.println("Finder: " + finderName + "...");
 		System.out.printf(
 				"Start seed: %d, Radius: %d regions (%d chunks, %d blocks)\n",
 				startSeed, radius, radius*32, radius*32*16);
