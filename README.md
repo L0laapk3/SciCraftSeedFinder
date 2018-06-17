@@ -37,11 +37,11 @@ There is a "magic" seed for seeding the RNG for structure generation; in
 previous versions it 14357617 (and remains that for desert temples), but was
 changed to 14357620 for witch huts for 1.13.
 
-This branch uses the updated value. It does produce working quad witch hut seeds
-in for 1.13, but many of the produced seeds don't have all four huts. I believe
-this is because of a subtle change in biome generation that means that some of
-the huts are actually not in a swamp, or there is some other constraint on
-structure generation is preventing them from appearing.
+A new bug in 1.13, MC-131462, prevents some structures from generated in
+negative coordinates. In the case of quad witch huts, some of the huts won't
+generate unless the south-east hut has non-negative coordinates for both X and
+Z. This makes quad seeds four times as rare, but the seedfinder isn't slower
+because it can just search the positive coordinates.
 
 ## Disclaimer
 
