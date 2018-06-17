@@ -38,9 +38,9 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 
 	protected void hooray(
 			long seed, BiomeGenerator generator, XZPair[] chunkLocations, XZPair worldSpawn) {
-		System.out.printf("%24d : (spawn: %4d, %4d)", seed, worldSpawn.getX(), worldSpawn.getZ());
-		for (XZPair location:chunkLocations) {
-			System.out.printf(" (%5d, %5d)", location.getX(), location.getZ());
+		System.out.printf("%24d : (spawn: %s)", seed, worldSpawn.asString());
+		for (XZPair location : chunkLocations) {
+			System.out.printf(" (%s)", location.asString());
 		}
 		System.out.print("\n");
 
