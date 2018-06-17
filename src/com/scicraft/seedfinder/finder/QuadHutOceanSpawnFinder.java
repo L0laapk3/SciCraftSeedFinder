@@ -1,7 +1,7 @@
 import com.scicraft.seedfinder.*;
 import java.util.*;
 
-public class QuadHutAndOceanSpawnFinder extends QuadHutFinder {
+public class QuadHutOceanSpawnFinder extends QuadHutFinder {
 	private static final float WATER_FRACTION = 0.80f;
 	private static final Biome[] WATER_BIOMES = {
 		Biome.ocean,

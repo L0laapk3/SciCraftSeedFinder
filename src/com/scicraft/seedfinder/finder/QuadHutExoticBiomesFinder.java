@@ -1,7 +1,7 @@
 import com.scicraft.seedfinder.*;
 import java.util.*;
 
-public class QuadHutExoticBiomesFinder extends QuadHutAndOceanSpawnFinder {
+public class QuadHutExoticBiomesFinder extends QuadHutOceanSpawnFinder {
 	private static final Biome[] EXOTIC_BIOMES = {
 		Biome.mushroomIsland,
 		Biome.megaTaiga,

@@ -10,31 +10,40 @@ public class FinderMain {
 			System.out.println("No finder specified, using default...");
 			System.out.println("Available finders:");
 			System.out.println("	QuadHut");
-			System.out.println("	QuadHutAndOceanSpawn");
+			System.out.println("	QuadHutOceanSpawn");
 			System.out.println("	QuadHutExoticBiomes");
-			System.out.println("	QuadHutAndMultiMansion");
+			System.out.println("	QuadHutMultiMansion");
+			System.out.println("	QuadHutThreeMansion");
+			System.out.println("	QuadHutExoticSpawn");
 		} else {
 			finderName = args[0];
 		}
 
 		SeedFinder finder;
 		switch (finderName) {
-			case "HutAndMonument":
-				finder = new HutandMonumentFinder();
-				break;
 			case "QuadHut":
 				finder = new QuadHutFinder();
 				break;
-			case "QuadHutAndOceanSpawn":
-				finder = new QuadHutAndOceanSpawnFinder();
+			case "QuadHutOceanSpawn":
+				finder = new QuadHutOceanSpawnFinder();
 				break;
 			case "QuadHutExoticBiomes":
 				finder = new QuadHutExoticBiomesFinder();
 				break;
-			case "QuadHutAndMultiMansion":
-				finder = new QuadHutAndMultiMansionFinder();
+			case "QuadHutMultiMansion":
+				finder = new QuadHutMultiMansionFinder();
 				break;
+			case "QuadHutThreeMansion":
+				finder = new QuadHutThreeMansionFinder();
+				break;
+			case "QuadHutExoticSpawn":
+				finder = new QuadHutExoticSpawnFinder();
+				break;
+			// TODO: Update these.
 			case "QuadHutMon":
+				finder = new HutandMonumentFinder();
+				break;
+			case "HutAndMonument":
 				finder = new HutandMonumentFinder();
 				break;
 			default:

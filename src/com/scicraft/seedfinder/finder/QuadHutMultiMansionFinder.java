@@ -1,10 +1,10 @@
 import java.lang.Math;
 import com.scicraft.seedfinder.*;
 
-public class QuadHutAndMultiMansionFinder extends QuadHutFinder {
+public class QuadHutMultiMansionFinder extends QuadHutOceanSpawnFinder {
 	private final WoodlandMansionLocator mansion;
 
-	public QuadHutAndMultiMansionFinder() {
+	public QuadHutMultiMansionFinder() {
 		mansion = new WoodlandMansionLocator();
 	}
 
