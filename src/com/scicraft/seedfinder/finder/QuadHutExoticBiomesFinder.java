@@ -1,7 +1,7 @@
 import com.scicraft.seedfinder.*;
 import java.util.*;
 
-public class QuadHutExoticBiomesFinder extends QuadHutOceanSpawnFinder {
+public class QuadHutExoticBiomesFinder extends QuadHutFinder {
 	private static final Biome[] EXOTIC_BIOMES = {
 		Biome.mushroomIsland,
 		Biome.megaTaiga,
@@ -14,7 +14,10 @@ public class QuadHutExoticBiomesFinder extends QuadHutOceanSpawnFinder {
 	protected boolean fullSeedWorks(
 			long seed, BiomeGenerator generator, int radius,
 			XZPair[] chunkLocations, XZPair worldSpawn) {
-		if (!super.fullSeedWorks(seed, generator, radius, chunkLocations, worldSpawn)) {
+		if (!checker.quadHutsWillSpawn(hut, chunkLocations, generator)) {
+			return false;
+		}
+		if (!checker.hasOceanSpawn(generator, radius, worldSpawn)) {
 			return false;
 		}
 

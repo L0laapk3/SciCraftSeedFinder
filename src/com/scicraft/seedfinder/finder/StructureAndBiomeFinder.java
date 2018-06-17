@@ -21,7 +21,7 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 				continue;
 			}
 
-			System.out.printf("Checking bits with potential %d...\n", baseSeed);
+			System.out.printf("Checking bits with potential %15d...\n", baseSeed);
 			for (long high=0; high<(1<<16); high++) {
 				long fullSeed = (high << 48) ^ baseSeed;
 				BiomeGenerator generator = new BiomeGenerator(fullSeed, 2);

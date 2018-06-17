@@ -1,8 +1,8 @@
 import java.lang.Math;
 import com.scicraft.seedfinder.*;
 
-public class QuadHutMultiMansionFinder extends QuadHutOceanSpawnFinder {
-	private final WoodlandMansionLocator mansion;
+public class QuadHutMultiMansionFinder extends QuadHutFinder {
+	protected final WoodlandMansionLocator mansion;
 
 	public QuadHutMultiMansionFinder() {
 		mansion = new WoodlandMansionLocator();
@@ -11,20 +11,12 @@ public class QuadHutMultiMansionFinder extends QuadHutOceanSpawnFinder {
 	protected boolean fullSeedWorks(
 			long seed, BiomeGenerator generator, int radius,
 			XZPair[] chunkLocations, XZPair worldSpawn) {
-		if (!super.fullSeedWorks(seed, generator, radius, chunkLocations, worldSpawn)) {
+		if (!checker.quadHutsWillSpawn(hut, chunkLocations, generator)) {
 			return false;
 		}
-		int mansionRadius = (int)Math.ceil((float)radius*32f / 80f);
-
-		int mansionCount = 0;
-		for (int regionX=-mansionRadius; regionX<mansionRadius; regionX++) {
-			for (int regionZ=-mansionRadius; regionZ<mansionRadius; regionZ++) {
-				if (mansion.structureWillSpawn(regionX, regionZ, seed, generator)) {
-					mansionCount++;
-				}
-			}
+		if (!checker.hasOceanSpawn(generator, radius, worldSpawn)) {
+			return false;
 		}
-
-		return mansionCount > 1;
+		return checker.mansionCount(mansion, seed, generator, radius) > 1;
 	}
 }

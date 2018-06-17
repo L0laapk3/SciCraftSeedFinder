@@ -2,19 +2,20 @@ import com.scicraft.seedfinder.*;
 import java.util.*;
 
 public class QuadHutExoticSpawnFinder extends QuadHutFinder {
-	private static final float EXOTIC_FRACTION = 0.70f;
+	private static final float EXOTIC_FRACTION = 0.50f;
 	private static final float MAX_EXCLUDED_FRACTION = 0.80f;
 	private static final Biome[] EXOTIC_BIOMES = {
 		Biome.mushroomIsland,
 		Biome.mushroomIslandShore,
 		Biome.mushroomIslandM,
 		Biome.mushroomIslandShoreM,
-		Biome.mesa,
-		Biome.mesaBryce,
-		Biome.mesaPlateau,
-		Biome.mesaPlateauF,
-		Biome.mesaPlateauM,
-		Biome.mesaPlateauFM,
+		// Found too many mesa spawns and not enough of the others.
+		// Biome.mesa,
+		// Biome.mesaBryce,
+		// Biome.mesaPlateau,
+		// Biome.mesaPlateauF,
+		// Biome.mesaPlateauM,
+		// Biome.mesaPlateauFM,
 		Biome.icePlainsSpikes,
 	};
 	// Biomes that may surround the exotic biomes but shouldn't count against
@@ -43,7 +44,7 @@ public class QuadHutExoticSpawnFinder extends QuadHutFinder {
 	protected boolean fullSeedWorks(
 			long seed, BiomeGenerator generator, int radius,
 			XZPair[] chunkLocations, XZPair worldSpawn) {
-		if (!quadHutsWillSpawn(chunkLocations, generator)) {
+		if (!checker.quadHutsWillSpawn(hut, chunkLocations, generator)) {
 			return false;
 		}
 

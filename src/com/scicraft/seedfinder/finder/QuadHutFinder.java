@@ -1,7 +1,7 @@
 import com.scicraft.seedfinder.*;
 
 public class QuadHutFinder extends StructureAndBiomeFinder {
-	private final WitchHutLocator hut;
+	protected final WitchHutLocator hut;
 
 	public QuadHutFinder() {
 		hut = new WitchHutLocator();
@@ -67,21 +67,9 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 		return null;
 	}
 
-	protected boolean quadHutsWillSpawn(XZPair[] chunkLocations, BiomeGenerator generator) {
-		// Only iterate through first four structures so that subclasses can
-		// have additional ones more easily.
-		for (int i=0; i<4; i++) {
-			XZPair location = chunkLocations[i];
-			if (!hut.structureWillSpawn(location, generator)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	protected boolean fullSeedWorks(
 			long seed, BiomeGenerator generator, int radius,
 			XZPair[] chunkLocations, XZPair worldSpawn) {
-		return quadHutsWillSpawn(chunkLocations, generator);
+		return checker.quadHutsWillSpawn(hut, chunkLocations, generator);
 	}
 }
