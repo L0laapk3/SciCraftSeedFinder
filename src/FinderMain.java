@@ -15,6 +15,7 @@ public class FinderMain {
 			System.out.println("	QuadHutMultiMansion");
 			System.out.println("	QuadHutThreeMansion");
 			System.out.println("	QuadHutExoticSpawn");
+			System.out.println("	ExtraCloseQuadHut");
 		} else {
 			finderName = args[0];
 		}
@@ -38,6 +39,9 @@ public class FinderMain {
 				break;
 			case "QuadHutExoticSpawn":
 				finder = new QuadHutExoticSpawnFinder();
+				break;
+			case "ExtraCloseQuadHut":
+				finder = new ExtraCloseQuadHutFinder();
 				break;
 			// TODO: Update these.
 			case "QuadHutMon":
