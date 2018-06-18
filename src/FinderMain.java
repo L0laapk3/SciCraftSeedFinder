@@ -9,14 +9,15 @@ public class FinderMain {
 		if (args.length < 1) {
 			System.out.println("No finder specified, using default...");
 			System.out.println("Available finders:");
-			System.out.println("	QuadHut");
-			System.out.println("	QuadHutOceanSpawn");
-			System.out.println("	QuadHutExoticBiomes");
-			System.out.println("	QuadHutMultiMansion");
-			System.out.println("	QuadHutThreeMansion");
-			System.out.println("	QuadHutExoticSpawn");
-			System.out.println("	ExtraCloseQuadHut");
-			System.out.println("	QuadHutMonument");
+			System.out.println("	QuadHut - basic quad hut finder");
+			System.out.println("	QuadHutOceanSpawn - with mostly ocean spawn chunks");
+			System.out.println("	QuadHutExoticBiomes - ocean spawn and all rare biomes nearby");
+			System.out.println("	QuadHutMultiMansion - ocean spawn and at least two woodland mansions nearby");
+			System.out.println("	QuadHutThreeMansion - at least three woodland mansions nearby");
+			System.out.println("	QuadHutExoticSpawn - rare biome in spawn chunks");
+			System.out.println("	ExtraCloseQuadHut - quad huts chunks are as close together as possible");
+			System.out.println("	QuadHutMonument - ocean monument very near quad huts");
+			System.out.println("	QuadHutMushroom - lots of mushroom biome area");
 		} else {
 			finderName = args[0];
 		}
@@ -46,6 +47,9 @@ public class FinderMain {
 				break;
 			case "QuadHutMonument":
 				finder = new QuadHutMonumentFinder();
+				break;
+			case "QuadHutMushroom":
+				finder = new QuadHutMushroomFinder();
 				break;
 			default:
 				System.out.println("Invalid finder name specified.");
