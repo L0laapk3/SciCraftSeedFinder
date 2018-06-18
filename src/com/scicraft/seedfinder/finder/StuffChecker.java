@@ -28,6 +28,23 @@ public class StuffChecker {
 		return true;
 	}
 
+	public boolean hasBiomes(
+			BiomeGenerator generator, int radius, int centerX, int centerY,
+			Biome[] biomes, float minFraction) {
+		Hashtable<Integer, Float> census = generator.biomeCensus(
+				centerX, centerY, radius, radius, true);
+		float fraction = 0f;
+		for (Biome biome : biomes) {
+			fraction += census.get(biome.index);
+		}
+		return fraction >= minFraction;
+	}
+
+	public boolean hasBiomes(
+			BiomeGenerator generator, int radius, Biome[] biomes, float minFraction) {
+		return hasBiomes(generator, radius, 0, 0, biomes, minFraction);
+	}
+
 	public boolean hasOceanSpawn(
 			BiomeGenerator generator, int radius, XZPair worldSpawn) {
 		Hashtable<Integer, Float> census = generator.biomeCensus(
