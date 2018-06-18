@@ -1,3 +1,5 @@
 build
 dist
+run-finder-many.sh
 *.log
+*.swp
