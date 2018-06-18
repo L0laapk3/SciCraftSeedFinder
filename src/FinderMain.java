@@ -16,6 +16,7 @@ public class FinderMain {
 			System.out.println("	QuadHutThreeMansion");
 			System.out.println("	QuadHutExoticSpawn");
 			System.out.println("	ExtraCloseQuadHut");
+			System.out.println("	QuadHutMonument");
 		} else {
 			finderName = args[0];
 		}
@@ -43,12 +44,8 @@ public class FinderMain {
 			case "ExtraCloseQuadHut":
 				finder = new ExtraCloseQuadHutFinder();
 				break;
-			// TODO: Update these.
-			case "QuadHutMon":
-				finder = new HutandMonumentFinder();
-				break;
-			case "HutAndMonument":
-				finder = new HutandMonumentFinder();
+			case "QuadHutMonument":
+				finder = new QuadHutMonumentFinder();
 				break;
 			default:
 				System.out.println("Invalid finder name specified.");
@@ -77,7 +74,7 @@ public class FinderMain {
 		System.out.printf(
 				"Start seed: %d, Radius: %d regions (%d chunks, %d blocks)\n",
 				startSeed, radius, radius*32, radius*32*16);
-		System.out.println("======================================================================");
+		System.out.println("========================================================================");
 		finder.findSeeds(startSeed, radius);
 	}
 }

@@ -11,8 +11,8 @@ abstract public class StructureLocator {
 	private static final long MAGIC_Z = 132897987541L;
 
 	private final long structureSeed;
-	protected final int structurePosRange;
-	private final int structureRegionSize;
+	public final int structurePosRange;
+	public final int structureRegionSize;
 	protected final HashSet<Integer> validBiomes;
 
 	public StructureLocator(long structureSeed, int structurePosRange, int structureRegionSize, Integer[] validBiomes) {

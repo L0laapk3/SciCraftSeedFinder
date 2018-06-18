@@ -11,7 +11,7 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 		int closeness = getCloseness();
 		this.closeness = closeness;
 		this.minEdge = closeness - 1;
-		this.maxEdge = 24 - closeness;
+		this.maxEdge = hut.structurePosRange - closeness;
 	}
 
 	protected int getCloseness() { return 2; }
