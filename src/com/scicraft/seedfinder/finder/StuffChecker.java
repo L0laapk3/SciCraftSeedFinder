@@ -6,7 +6,7 @@ public class StuffChecker {
 	private static final int SPAWN_AREA = 256*256;
 
 	private static final float WATER_FRACTION = 0.80f;
-	private static final Biome[] WATER_BIOMES = {
+	public static final Biome[] WATER_BIOMES = {
 		Biome.ocean,
 		Biome.deepOcean,
 		Biome.frozenOcean,
@@ -29,31 +29,45 @@ public class StuffChecker {
 	}
 
 	public boolean hasBiomes(
-			BiomeGenerator generator, int radius, int centerX, int centerY,
-			Biome[] biomes, float minFraction) {
+			BiomeGenerator generator, int size, int centerX, int centerZ,
+			Biome[] biomes, Biome[] excluded, float minFraction) {
 		Hashtable<Integer, Float> census = generator.biomeCensus(
-				centerX, centerY, radius, radius, true);
+				centerX, centerZ, size, size, true);
+
+		float exFraction = 0f;
+		if (excluded != null) {
+			for (Biome ex : excluded) {
+				exFraction += census.get(ex.index);
+			}
+		}
+		if (exFraction > 0.90f) { exFraction = 0.90f; }
+
 		float fraction = 0f;
 		for (Biome biome : biomes) {
 			fraction += census.get(biome.index);
 		}
-		return fraction >= minFraction;
+
+		return fraction / (1f - exFraction) >= minFraction;
 	}
 
 	public boolean hasBiomes(
-			BiomeGenerator generator, int radius, Biome[] biomes, float minFraction) {
-		return hasBiomes(generator, radius, 0, 0, biomes, minFraction);
+			BiomeGenerator generator, int size, Biome[] biomes, float minFraction) {
+		return hasBiomes(generator, size, 0, 0, biomes, null, minFraction);
+	}
+
+	public boolean hasBiomes(
+			BiomeGenerator generator, int size, int centerX, int centerZ, Biome[] biomes, float minFraction) {
+		return hasBiomes(generator, size, centerX, centerZ, biomes, null, minFraction);
+	}
+
+	public boolean hasBiomes(
+			BiomeGenerator generator, int size, Biome[] biomes, Biome[] excluded, float minFraction) {
+		return hasBiomes(generator, size, 0, 0, biomes, excluded, minFraction);
 	}
 
 	public boolean hasOceanSpawn(
 			BiomeGenerator generator, int radius, XZPair worldSpawn) {
-		Hashtable<Integer, Float> census = generator.biomeCensus(
-				worldSpawn.getX(), worldSpawn.getZ(), SPAWN_SIZE, SPAWN_SIZE, true);
-		float waterFraction = 0f;
-		for (Biome biome : WATER_BIOMES) {
-			waterFraction += census.get(biome.index);
-		}
-		return waterFraction >= WATER_FRACTION;
+		return hasBiomes(generator, SPAWN_SIZE, WATER_BIOMES, WATER_FRACTION);
 	}
 
 	public int mansionCount(

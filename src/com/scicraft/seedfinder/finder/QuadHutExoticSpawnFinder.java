@@ -3,7 +3,6 @@ import java.util.*;
 
 public class QuadHutExoticSpawnFinder extends QuadHutFinder {
 	private static final float EXOTIC_FRACTION = 0.50f;
-	private static final float MAX_EXCLUDED_FRACTION = 0.80f;
 	private static final Biome[] EXOTIC_BIOMES = {
 		Biome.mushroomIsland,
 		Biome.mushroomIslandShore,
@@ -48,24 +47,9 @@ public class QuadHutExoticSpawnFinder extends QuadHutFinder {
 			return false;
 		}
 
-		Hashtable<Integer, Float> census = generator.biomeCensus(
-				worldSpawn.getX(), worldSpawn.getZ(), SPAWN_SIZE, SPAWN_SIZE, true);
-
-		float excludedFraction = 0f;
-		for (Biome biome : EXCLUDED_BIOMES) {
-			excludedFraction += census.get(biome.index);
-		}
-		if (excludedFraction > MAX_EXCLUDED_FRACTION) {
-			return false;
-		}
-
-		float exoticFraction = 0f;
-		for (Biome biome : EXOTIC_BIOMES) {
-			exoticFraction += census.get(biome.index);
-		}
-
-		// Only consider the non-excluded portion of the spawn area.
-		return exoticFraction / (1f - excludedFraction) >= EXOTIC_FRACTION;
+		return checker.hasBiomes(
+				generator, SPAWN_SIZE, worldSpawn.getX(), worldSpawn.getZ(),
+				EXOTIC_BIOMES, EXCLUDED_BIOMES, EXOTIC_FRACTION);
 	}
 }
 
