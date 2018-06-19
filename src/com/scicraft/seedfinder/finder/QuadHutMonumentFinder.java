@@ -3,7 +3,7 @@ import java.util.*;
 
 public class QuadHutMonumentFinder extends QuadHutFinder {
 	protected final OceanMonumentLocator monument;
-	private final int monumentCloseness = 10;
+	private final int monumentCloseness = 5;
 	private final int monumentMinEdge;
 	private final int monumentMaxEdge;
 
