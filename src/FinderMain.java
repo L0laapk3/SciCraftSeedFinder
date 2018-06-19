@@ -18,6 +18,7 @@ public class FinderMain {
 			System.out.println("	ExtraCloseQuadHut - quad huts chunks are as close together as possible");
 			System.out.println("	QuadHutMonument - ocean monument very near quad huts");
 			System.out.println("	QuadHutMushroom - lots of mushroom biome area");
+			System.out.println("	Everything - ocean spawn, all the biomes, close woodland mansion");
 		} else {
 			finderName = args[0];
 		}
@@ -50,6 +51,9 @@ public class FinderMain {
 				break;
 			case "QuadHutMushroom":
 				finder = new QuadHutMushroomFinder();
+				break;
+			case "Everything":
+				finder = new EverythingFinder();
 				break;
 			default:
 				System.out.println("Invalid finder name specified.");
