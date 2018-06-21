@@ -29,8 +29,12 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 				if (worldSpawn == null) {
 					worldSpawn = new XZPair(0, 0);
 				}
-				if (fullSeedWorks(fullSeed, generator, radius, potential, worldSpawn)) {
-					hooray(fullSeed, generator, potential, worldSpawn);
+				try {
+					if (fullSeedWorks(fullSeed, generator, radius, potential, worldSpawn)) {
+						hooray(fullSeed, generator, potential, worldSpawn);
+					}
+				} catch (Exception e) {
+					System.out.printf("Exception thrown for seed %d.\n", fullSeed);
 				}
 			}
 		}

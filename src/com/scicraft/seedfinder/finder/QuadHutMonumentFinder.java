@@ -3,14 +3,17 @@ import java.util.*;
 
 public class QuadHutMonumentFinder extends QuadHutFinder {
 	protected final OceanMonumentLocator monument;
-	private final int monumentCloseness = 7;
+	private final int monumentCloseness = 5;
 	private final int monumentMinEdge;
 	private final int monumentMaxEdge;
 
 	public QuadHutMonumentFinder() {
 		this.monument = new OceanMonumentLocator();
 		this.monumentMinEdge = monumentCloseness - 1;
-		this.monumentMaxEdge = monument.structurePosRange - monumentCloseness;
+		// This is bigger for the top/left corners because overlap is bigger in
+		// the top left, and it should have more area to search to get the same
+		// overall closeness.
+		this.monumentMaxEdge = monument.structurePosRange - monumentCloseness - 3;
 	}
 
 	private int fullToRegion(int x, int regionSize) {

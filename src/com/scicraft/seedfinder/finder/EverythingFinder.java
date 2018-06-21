@@ -7,7 +7,6 @@ public class EverythingFinder extends QuadHutFinder {
 		Biome.mushroomIsland,
 		Biome.megaTaiga,
 		Biome.mesa,
-		Biome.mesaBryce,
 		Biome.flowerForest,
 		Biome.icePlainsSpikes,
 		Biome.jungle,
@@ -33,7 +32,7 @@ public class EverythingFinder extends QuadHutFinder {
 		Hashtable<Integer, Float> census = generator.biomeCensus(
 				worldSpawn.getX(), worldSpawn.getZ(), radius*2*32*16, radius*2*32*16, true);
 		for (Biome biome : EXOTIC_BIOMES) {
-			if (census.get(biome.index) < 0.0005) {  // 0.05%, or about 8 chunks
+			if (census.get(biome.index) < 0.00025) {  // 0.025%, or about 4 chunks
 				return false;
 			}
 		}
