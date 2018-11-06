@@ -65,8 +65,8 @@ public class FinderMain {
 		}
 
 		long startSeed;
-		if (args.length >= 2) {
-			startSeed = Long.parseLong(args[1]);
+		if (args.length >= 3) {
+			startSeed = Long.parseLong(args[2]);
 		} else {
 			System.out.println("No start seed specified, picking randomly...");
 			Random rnd = new Random();
@@ -74,8 +74,8 @@ public class FinderMain {
 		}
 
 		int radius;
-		if (args.length >= 3) {
-			radius = Integer.parseInt(args[2]);
+		if (args.length >= 2) {
+			radius = Integer.parseInt(args[1]);
 		} else {
 			System.out.println("No radius specified, using default...");
 			radius = 4;
@@ -109,8 +109,8 @@ public class FinderMain {
 						"-jar",
 						new File(FinderMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath(),
 						finderName,
-						Long.toString(startSeed),
 						Integer.toString(radius),
+						Long.toString(startSeed),
 						Integer.toString(i),
 						Integer.toString(threads)
 					);
