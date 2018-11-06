@@ -1,8 +1,10 @@
 import java.lang.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Random;
 import com.scicraft.seedfinder.*;
 import com.scicraft.seedfinder.finder.*;
+import java.io.*;
 
 public class FinderMain {
 	public static void main(String[] args) {
@@ -62,8 +64,6 @@ public class FinderMain {
 				System.exit(1);
 		}
 
-		int threads = Runtime.getRuntime().availableProcessors();
-
 		long startSeed;
 		if (args.length >= 2) {
 			startSeed = Long.parseLong(args[1]);
@@ -82,13 +82,13 @@ public class FinderMain {
 		}
 
 
-		System.out.println("Finder: " + finderType.getName() + "...");
-        for (int i=0; i < threads; i++) 
-        {
+		if (args.length >= 5) {
+			int threadNumber = Integer.parseInt(args[3]);
+			int maxThreads = Integer.parseInt(args[4]);
 			try {
 				SeedFinder finder;
 				try {
-					finder = (SeedFinder)finderType.asSubclass(SeedFinder.class).getConstructor(long.class, int.class, int.class, int.class).newInstance(startSeed, radius, i, threads);
+					finder = (SeedFinder)finderType.asSubclass(SeedFinder.class).getConstructor(long.class, int.class, int.class, int.class).newInstance(startSeed, radius, threadNumber, maxThreads);
 				} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex) {
 					throw new RuntimeException(ex);
 				}
@@ -96,7 +96,37 @@ public class FinderMain {
 			} catch (RuntimeException ex) {
 				throw ex;
 			}
-        }
-		System.out.println("========================================================================");
+		} else {
+
+			int threads = Runtime.getRuntime().availableProcessors();
+	
+			System.out.println("Finder: " + finderType.getName() + "...");
+			try {
+				for (int i=0; i < threads; i++) 
+				{	
+					ProcessBuilder pb = new ProcessBuilder(
+						System.getProperty("java.home") + "/bin/java.exe",
+						"-jar",
+						new File(FinderMain.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath(),
+						finderName,
+						Long.toString(startSeed),
+						Integer.toString(radius),
+						Integer.toString(i),
+						Integer.toString(threads)
+					);
+					pb.inheritIO();
+					pb.start();
+					System.out.printf(
+						"Thread %d/%d, Start seed: %d, Radius: %d regions (%d chunks, %d blocks)\n",
+						 i+1, threads, startSeed, radius, radius*32, radius*32*16);
+				}
+
+				while (true) {
+					Thread.sleep(Long.MAX_VALUE);
+				}
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		}
 	}
 }

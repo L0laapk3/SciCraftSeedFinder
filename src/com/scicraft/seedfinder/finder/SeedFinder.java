@@ -17,10 +17,6 @@ abstract public class SeedFinder extends Thread {
 		this.threadCount = threadCount;
 		
 		this.checker = new StuffChecker();
-		
-		System.out.printf(
-			"Thread %d/%d, Start seed: %d, Radius: %d regions (%d chunks, %d blocks)\n",
-			 threadNumber+1, threadCount, this.startSeed, radius, radius*32, radius*32*16);
 	}
 
 	public void run() {
