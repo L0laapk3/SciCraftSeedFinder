@@ -7,7 +7,8 @@ public class QuadHutMonumentFinder extends QuadHutFinder {
 	private final int monumentMinEdge;
 	private final int monumentMaxEdge;
 
-	public QuadHutMonumentFinder() {
+	public QuadHutMonumentFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
 		this.monument = new OceanMonumentLocator();
 		this.monumentMinEdge = monumentCloseness - 1;
 		// This is bigger for the top/left corners because overlap is bigger in

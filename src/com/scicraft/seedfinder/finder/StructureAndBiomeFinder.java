@@ -1,6 +1,10 @@
 import com.scicraft.seedfinder.*;
 
 abstract public class StructureAndBiomeFinder extends SeedFinder {
+	public StructureAndBiomeFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
+	}
+	
 	protected static final SpawnLocator spawnLocator = new SpawnLocator();
 	protected static final int SPAWN_SIZE = 256;
 	protected static final int SPAWN_AREA = 256*256;
@@ -14,8 +18,8 @@ abstract public class StructureAndBiomeFinder extends SeedFinder {
 		return new XZPair(regionX*32 + regionChunk.getX(), regionZ*32 + regionChunk.getZ());
 	}
 
-	public void findSeeds(long startSeed, int radius) {
-		for (long baseSeed = startSeed; baseSeed <= endSeed; baseSeed++) {
+	public void findSeeds(long startSeed, int radius, int threadCount) {
+		for (long baseSeed = startSeed; baseSeed <= endSeed; baseSeed += threadCount) {
 			XZPair[] potential = seedPotential(baseSeed, radius);
 			if (potential == null) {
 				continue;

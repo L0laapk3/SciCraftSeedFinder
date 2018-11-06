@@ -2,6 +2,10 @@ import com.scicraft.seedfinder.*;
 import java.util.*;
 
 public class QuadHutExoticBiomesFinder extends QuadHutFinder {
+	public QuadHutExoticBiomesFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
+	};
+
 	private static final Biome[] EXOTIC_BIOMES = {
 		Biome.mushroomIsland,
 		Biome.megaTaiga,

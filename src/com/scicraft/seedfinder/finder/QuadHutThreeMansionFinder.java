@@ -2,6 +2,10 @@ import java.lang.Math;
 import com.scicraft.seedfinder.*;
 
 public class QuadHutThreeMansionFinder extends QuadHutMultiMansionFinder {
+	
+	public QuadHutThreeMansionFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
+	}
 
 	protected boolean fullSeedWorks(
 			long seed, BiomeGenerator generator, int radius,

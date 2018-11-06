@@ -1,4 +1,5 @@
 import java.lang.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 import com.scicraft.seedfinder.*;
 import com.scicraft.seedfinder.finder.*;
@@ -23,43 +24,45 @@ public class FinderMain {
 			finderName = args[0];
 		}
 
-		SeedFinder finder;
+		Class finderType;
 		switch (finderName) {
 			case "QuadHut":
-				finder = new QuadHutFinder();
+				finderType = QuadHutFinder.class;
 				break;
 			case "QuadHutOceanSpawn":
-				finder = new QuadHutOceanSpawnFinder();
+				finderType = QuadHutOceanSpawnFinder.class;
 				break;
 			case "QuadHutExoticBiomes":
-				finder = new QuadHutExoticBiomesFinder();
+				finderType = QuadHutExoticBiomesFinder.class;
 				break;
 			case "QuadHutMultiMansion":
-				finder = new QuadHutMultiMansionFinder();
+				finderType = QuadHutMultiMansionFinder.class;
 				break;
 			case "QuadHutThreeMansion":
-				finder = new QuadHutThreeMansionFinder();
+				finderType = QuadHutThreeMansionFinder.class;
 				break;
 			case "QuadHutExoticSpawn":
-				finder = new QuadHutExoticSpawnFinder();
+				finderType = QuadHutExoticSpawnFinder.class;
 				break;
 			case "ExtraCloseQuadHut":
-				finder = new ExtraCloseQuadHutFinder();
+				finderType = ExtraCloseQuadHutFinder.class;
 				break;
 			case "QuadHutMonument":
-				finder = new QuadHutMonumentFinder();
+				finderType = QuadHutMonumentFinder.class;
 				break;
 			case "QuadHutMushroom":
-				finder = new QuadHutMushroomFinder();
+				finderType = QuadHutMushroomFinder.class;
 				break;
 			case "Everything":
-				finder = new EverythingFinder();
+				finderType = EverythingFinder.class;
 				break;
 			default:
 				System.out.println("Invalid finder name specified.");
-				finder = null;
+				finderType = null;
 				System.exit(1);
 		}
+
+		int threads = Runtime.getRuntime().availableProcessors();
 
 		long startSeed;
 		if (args.length >= 2) {
@@ -78,11 +81,22 @@ public class FinderMain {
 			radius = 4;
 		}
 
-		System.out.println("Finder: " + finderName + "...");
-		System.out.printf(
-				"Start seed: %d, Radius: %d regions (%d chunks, %d blocks)\n",
-				startSeed, radius, radius*32, radius*32*16);
+
+		System.out.println("Finder: " + finderType.getName() + "...");
+        for (int i=0; i < threads; i++) 
+        {
+			try {
+				SeedFinder finder;
+				try {
+					finder = (SeedFinder)finderType.asSubclass(SeedFinder.class).getConstructor(long.class, int.class, int.class, int.class).newInstance(startSeed, radius, i, threads);
+				} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException ex) {
+					throw new RuntimeException(ex);
+				}
+				finder.start(); 
+			} catch (RuntimeException ex) {
+				throw ex;
+			}
+        }
 		System.out.println("========================================================================");
-		finder.findSeeds(startSeed, radius);
 	}
 }

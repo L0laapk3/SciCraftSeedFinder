@@ -2,6 +2,11 @@ import com.scicraft.seedfinder.*;
 import java.util.*;
 
 public class QuadHutExoticSpawnFinder extends QuadHutFinder {
+	
+	public QuadHutExoticSpawnFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
+	}
+
 	private static final float EXOTIC_FRACTION = 0.50f;
 	private static final Biome[] EXOTIC_BIOMES = {
 		Biome.mushroomIsland,

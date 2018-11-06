@@ -4,7 +4,8 @@ import com.scicraft.seedfinder.*;
 public class QuadHutMultiMansionFinder extends QuadHutFinder {
 	protected final WoodlandMansionLocator mansion;
 
-	public QuadHutMultiMansionFinder() {
+	public QuadHutMultiMansionFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
 		mansion = new WoodlandMansionLocator();
 	}
 

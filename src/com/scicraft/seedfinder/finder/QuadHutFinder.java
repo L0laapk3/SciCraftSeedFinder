@@ -6,7 +6,9 @@ public class QuadHutFinder extends StructureAndBiomeFinder {
 	private final int minEdge;
 	private final int maxEdge;
 
-	public QuadHutFinder() {
+	public QuadHutFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
+		
 		this.hut = new WitchHutLocator();
 		int closeness = getCloseness();
 		this.closeness = closeness;

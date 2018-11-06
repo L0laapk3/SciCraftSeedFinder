@@ -12,7 +12,8 @@ public class EverythingFinder extends QuadHutFinder {
 		Biome.jungle,
 	};
 
-	public EverythingFinder() {
+	public EverythingFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
 		mansion = new WoodlandMansionLocator();
 	}
 

@@ -2,6 +2,11 @@ import com.scicraft.seedfinder.*;
 import java.util.*;
 
 public class QuadHutMushroomFinder extends QuadHutFinder {
+	
+	public QuadHutMushroomFinder(long startSeed, int radius, int threadNumber, int threadCount) {
+		super(startSeed, radius, threadNumber, threadCount);
+	}
+
 	private static final float MUSHROOM_FRACTION = 0.018f;
 	private static final Biome[] MUSHROOM_BIOMES = {
 		Biome.mushroomIsland,
